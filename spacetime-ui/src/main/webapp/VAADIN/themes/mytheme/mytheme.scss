@@ -30,9 +30,66 @@
 // Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
 
 @import "../valo/valo.scss";
+@-moz-keyframes rotating1
+{
+  0% {
+    -moz-transform: rotate(0deg) translate(300px);
+  }
+  100% {
+    -moz-transform: rotate(360deg) translate(300px);
+  }
+}
+
+@-moz-keyframes rotating2
+{
+  0% {
+    -moz-transform: rotate(0deg) translate(300px);
+  }
+  100% {
+    -moz-transform: rotate(360deg) translate(300px);
+  }
+}
+
+@-moz-keyframes rotating3
+{
+  0% {
+    -moz-transform: rotate(0deg) translate(300px);
+  }
+  100% {
+    -moz-transform: rotate(360deg) translate(300px);
+  }
+}
 
 @mixin mytheme {
   @include valo;
 
   // Insert your own theme rules here
+  .spacetime {
+    background: -webkit-linear-gradient(black, #00ace0); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(black, #00ace0); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(black, #00ace0); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(black, dimgrey); /* Standard syntax */
+    opacity: .75;
+  }
+
+  .logo {
+    border-radius: 50%;
+    opacity: .85;
+    background: -webkit-linear-gradient(greenyellow, orangered, transparent); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(greenyellow, orangered, transparent); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(greenyellow, orangered, transparent); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(greenyellow, orangered, transparent); /* Standard syntax */
+    position: absolute;
+  }
+
+  .portal {
+    background: transparent;
+    opacity: 1;
+    color: white;
+  }
+
+  .portal-name {
+    font-size: large;
+    font-weight: bold;
+  }
 }
