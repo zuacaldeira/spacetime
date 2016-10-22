@@ -1,62 +1,66 @@
 package org.spacetime;
 
-
 import com.vaadin.server.Page;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Created by zua on 19/10/16.
+ * Created by zua on 21/10/16.
  */
-public class SpaceTimeView extends VerticalLayout implements Page.BrowserWindowResizeListener {
-    private Logo logo;
-    private HorizontalLayout base;
-    private ServicePortal sessionTypesPortal;
-    private ServicePortal mathemathicsPortal;
-    private ServicePortal blogPortal;
+public abstract class SpacetimeView extends VerticalLayout implements Page.BrowserWindowResizeListener, Button.ClickListener{
+    private SpacetimeMenu menu;
+    private SpaceTimeBody body;
+    private HorizontalLayout footer;
 
-    public SpaceTimeView() {
+    public SpacetimeView() {
         setStyleName("spacetime");
-        initLogo();
-        initBase();
-        initMathematicsPortal();
-        initSessionTypesPortal();
-        initBlogPortal();
-        base.addComponents(mathemathicsPortal, sessionTypesPortal);
-        addComponents(logo, base);
         setSizeFull();
-        setExpandRatio(logo, .1f);
-        setExpandRatio(base, .9f);
+        setHeightUndefined();
+
+        initMenu();
+        initMain();
+        addComponents(menu, body);
+
+        setExpandRatio(menu, .1f);
+        setExpandRatio(body, .9f);
+
+        setComponentAlignment(menu, Alignment.MIDDLE_CENTER);
+        setComponentAlignment(body, Alignment.MIDDLE_CENTER);
     }
 
-    private void initBase() {
-        base = new HorizontalLayout();
-        base.setSizeFull();
+    public SpacetimeMenu getMenu() {
+        return menu;
     }
 
-    private void initLogo() {
-        logo = new Logo();
+    public void setMenu(SpacetimeMenu menu) {
+        this.menu = menu;
     }
 
-
-    private void initSessionTypesPortal() {
-        sessionTypesPortal = new ServicePortal("Session Types: Specification Driven Development", getDummyDescription2());
+    public SpaceTimeBody getBody() {
+        return body;
     }
 
-    private void initMathematicsPortal() {
-        mathemathicsPortal = new ServicePortal("Mathematics", getDummyDescription1());
-        mathemathicsPortal.addService(new ServicePortal("+"));
-        mathemathicsPortal.addService(new ServicePortal("-"));
-        mathemathicsPortal.addService(new ServicePortal("x"));
-        mathemathicsPortal.addService(new ServicePortal("/"));
+    public void setBody(SpaceTimeBody body) {
+        this.body = body;
     }
 
-    private void initBlogPortal() {
-        blogPortal = new ServicePortal("Blog", getDummyDescription1());
+    public HorizontalLayout getFooter() {
+        return footer;
     }
 
+    public void setFooter(HorizontalLayout footer) {
+        this.footer = footer;
+    }
 
-    private String getDummyDescription1() {
+    @Override
+    public void browserWindowResized(Page.BrowserWindowResizeEvent browserWindowResizeEvent) {
+        setWidth(browserWindowResizeEvent.getWidth(), Unit.PIXELS);
+        setHeight(browserWindowResizeEvent.getHeight(), Unit.PIXELS);
+    }
+
+    protected String getDummyDescription1() {
         return "Lorem ipsum dolor sit amet, nunc pellentesque in aliquet " +
                 "parturient nonummy quos, blandit nascetur, amet ante mauris " +
                 "lacus ut viverra, ut quis dictumst aliquam arcu mauris egestas. " +
@@ -67,7 +71,7 @@ public class SpaceTimeView extends VerticalLayout implements Page.BrowserWindowR
                 "at pellentesque massa vel ullamcorper imperdiet magna.";
     }
 
-    private String getDummyDescription2() {
+    protected  String getDummyDescription2() {
         return "Nulla pellentesque sed diam, diam a vel amet justo lacus at, erat sagittis " +
                 "gravida vestibulum sagittis gravida, et interdum interdum semper, rutrum eu non sed. " +
                 "Et suspendisse lectus dui pretium, turpis nibh ut vel massa dapibus, turpis sed " +
@@ -84,9 +88,17 @@ public class SpaceTimeView extends VerticalLayout implements Page.BrowserWindowR
                 "ullamcorper at vestibulum eget, sollicitudin lacus duis dictum vel commodo eleifend.";
     }
 
-    @Override
-    public void browserWindowResized(Page.BrowserWindowResizeEvent browserWindowResizeEvent) {
-        setWidth(browserWindowResizeEvent.getWidth(), Unit.PIXELS);
-        setHeight(browserWindowResizeEvent.getHeight(), Unit.PIXELS);
+
+
+    protected final void initMenu() {
+        setMenu(createMenu());
     }
+    protected final void initMain() {
+        setBody(createMain());
+    }
+
+    protected abstract SpacetimeMenu createMenu();
+    protected abstract SpaceTimeBody createMain();
+
+
 }

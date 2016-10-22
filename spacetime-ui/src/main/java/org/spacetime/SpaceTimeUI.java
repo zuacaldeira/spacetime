@@ -17,7 +17,7 @@ public class SpaceTimeUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        SpaceTimeView layout = new SpaceTimeView();
+        MainSpacetimeView layout = new MainSpacetimeView();
         setContent(layout);
     }
 

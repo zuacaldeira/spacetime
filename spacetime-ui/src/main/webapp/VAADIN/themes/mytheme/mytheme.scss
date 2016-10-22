@@ -30,23 +30,27 @@
 // Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
 
 @import "../valo/valo.scss";
-@-moz-keyframes rotating1
+
+
+$period: 6s;
+
+@-moz-keyframes rotating
 {
   0% {
-    -moz-transform: rotate(0deg) translate(300px);
+    -moz-transform: rotateZ(0deg) translate(32px);
   }
   100% {
-    -moz-transform: rotate(360deg) translate(300px);
+    -moz-transform: rotateZ(360deg) translate(32px);
   }
 }
 
 @-moz-keyframes rotating2
 {
   0% {
-    -moz-transform: rotate(0deg) translate(300px);
+    -moz-transform: rotate(0deg);
   }
   100% {
-    -moz-transform: rotate(360deg) translate(300px);
+    -moz-transform: rotate(360deg);
   }
 }
 
@@ -63,16 +67,20 @@
 @mixin mytheme {
   @include valo;
 
-  // Insert your own theme rules here
-  .spacetime {
+  .v-ui{
+    background: -moz-linear-gradient(black, #00ace0); /* For Firefox 3.6 to 15 */
     background: -webkit-linear-gradient(black, #00ace0); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(black, #00ace0); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(black, #00ace0); /* For Firefox 3.6 to 15 */
     background: linear-gradient(black, dimgrey); /* Standard syntax */
-    opacity: .75;
+  }
+  // Insert your own theme rules here
+  .spacetime {
   }
 
   .logo {
+  }
+
+  .sun {
     border-radius: 50%;
     opacity: .85;
     background: -webkit-linear-gradient(greenyellow, orangered, transparent); /* For Safari 5.1 to 6.0 */
@@ -80,16 +88,77 @@
     background: -moz-linear-gradient(greenyellow, orangered, transparent); /* For Firefox 3.6 to 15 */
     background: linear-gradient(greenyellow, orangered, transparent); /* Standard syntax */
     position: absolute;
+
+    -webkit-animation: rotating $period linear infinite;
+    -moz-animation: rotating $period linear infinite;
+    -o-animation: rotating $period linear infinite;
+    animation: rotating $period linear infinite;
+  }
+
+  .stars{
+    background: red;
+  }
+  .star {
+    border-radius: 50%;
+    background: whitesmoke;
+  }
+
+
+  .portal-background {
   }
 
   .portal {
-    background: transparent;
-    opacity: 1;
     color: white;
+    opacity: 1;
   }
 
   .portal-name {
-    font-size: large;
+    font-size: x-large;
     font-weight: bold;
+    opacity: 1;
   }
+
+  .menu {
+    .spacetime-button {
+      background: -webkit-linear-gradient(left,rgba(255,0,0,0),rgba(255,0,0,.5)); /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(left,rgba(255,0,0,0),rgba(255,0,0,.5)); /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(left,rgba(255,0,0,0),rgba(255,0,0,.5)); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(left,rgba(255,0,0,0),rgba(255,0,0,.5)); /* Standard syntax */
+      opacity: 1;
+    }
+  }
+
+  .spacetime-button {
+    color: white;
+    font-weight: bold;
+    opacity: 1;
+  }
+
+  .bar {
+    background: -webkit-linear-gradient(rgba(255,0,0,0),rgba(255,0,0,1)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(rgba(255,0,0,0),rgba(255,0,0,1)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(rgba(255,0,0,0),rgba(255,0,0,1)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(rgba(255,0,0,0),rgba(255,0,0,1)); /* Standard syntax */
+  }
+
+  .number {
+    border-radius: 50%;
+  }
+
+  .chart {
+    background: -webkit-linear-gradient(rgba(255,255,255,1),rgba(255,255,255,0)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(rgba(255,255,255,1),rgba(255,255,255,0)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(rgba(255,255,255,1),rgba(255,255,255,0)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(rgba(255,255,255,1),rgba(255,255,255,0)); /* Standard syntax */
+
+    -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+    -moz-transition: width 2s; /* For Safari 3.1 to 6.0 */
+    transition: width 2s;
+  }
+
+  .chart:hover {
+    width: 100%;
+  }
+
+
 }
