@@ -11,7 +11,7 @@ The project consists of the following three modules:
 
 - parent project: common metadata and configuration
 - spacetime-addon: addon module, custom server and client side code 
-- spacetime-ui: main application module
+- spacetime-ui: body application module
 - spacetime-backend: backend module, contains any server side java code and dependencies
 
 Workflow

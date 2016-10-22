@@ -57,13 +57,13 @@
 		<!-- Include sources for client-side compilation -->
 		<resources>
 			<resource>
-				<directory>src/main/java</directory>
+				<directory>src/body/java</directory>
 				<includes>
 					<include>**/*.java</include>
 				</includes>
 			</resource>
 			<resource>
-				<directory>src/main/resources</directory>
+				<directory>src/body/resources</directory>
 			</resource>
 		</resources>
 	</build>
