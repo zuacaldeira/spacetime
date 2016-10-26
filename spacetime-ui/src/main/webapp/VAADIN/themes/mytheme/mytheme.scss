@@ -37,30 +37,10 @@ $period: 6s;
 @-moz-keyframes rotating
 {
   0% {
-    -moz-transform: rotateZ(0deg) translate(32px);
+    -moz-transform: rotate(0deg) translate(32px);
   }
   100% {
-    -moz-transform: rotateZ(360deg) translate(32px);
-  }
-}
-
-@-moz-keyframes rotating2
-{
-  0% {
-    -moz-transform: rotate(0deg);
-  }
-  100% {
-    -moz-transform: rotate(360deg);
-  }
-}
-
-@-moz-keyframes rotating3
-{
-  0% {
-    -moz-transform: rotate(0deg) translate(300px);
-  }
-  100% {
-    -moz-transform: rotate(360deg) translate(300px);
+    -moz-transform: rotate(360deg) translate(32px);
   }
 }
 
@@ -157,8 +137,15 @@ $period: 6s;
   }
 
   .chart:hover {
-    width: 100%;
+    width: 500px;
   }
 
+  .random-color {
+    background: -webkit-linear-gradient(rgba(random(255),random(255),random(255),1), rgba(random(255),random(255),random(255),.5)); /* For Safari 5.1 to 6.0 */
+    background:      -o-linear-gradient(rgba(random(255),random(255),random(255),1), rgba(random(255),random(255),random(255),.5)); /* For Opera 11.1 to 12.0 */
+    background:    -moz-linear-gradient(rgba(random(255),random(255),random(255),1), rgba(random(255),random(255),random(255),.5)); /* For Firefox 3.6 to 15 */
+    background:         linear-gradient(rgba(random(255),random(255),random(255),1), rgba(random(255),random(255),random(255),.5)); /* Standard syntax */
+
+  }
 
 }

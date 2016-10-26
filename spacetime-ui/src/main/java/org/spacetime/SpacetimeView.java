@@ -99,6 +99,4 @@ public abstract class SpacetimeView extends VerticalLayout implements Page.Brows
 
     protected abstract SpacetimeMenu createMenu();
     protected abstract SpaceTimeBody createMain();
-
-
 }

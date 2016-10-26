@@ -1559,28 +1559,10 @@ div.v-layout.v-horizontal.v-widget {
 
 @-moz-keyframes rotating {
 		0% {
-		-moz-transform: rotateZ(0deg) translate(32px);
+		-moz-transform: rotate(0deg) translate(32px);
 	}
 		100% {
-		-moz-transform: rotateZ(360deg) translate(32px);
-	}
-	}
-
-@-moz-keyframes rotating2 {
-		0% {
-		-moz-transform: rotate(0deg);
-	}
-		100% {
-		-moz-transform: rotate(360deg);
-	}
-	}
-
-@-moz-keyframes rotating3 {
-		0% {
-		-moz-transform: rotate(0deg) translate(300px);
-	}
-		100% {
-		-moz-transform: rotate(360deg) translate(300px);
+		-moz-transform: rotate(360deg) translate(32px);
 	}
 	}
 
@@ -13066,4 +13048,18 @@ div.v-layout.v-horizontal.v-widget {
 	background: -o-linear-gradient(white, rgba(255, 255, 255, 0));
 	background: -moz-linear-gradient(white, rgba(255, 255, 255, 0));
 	background: linear, false, zip(white rgba(255, 255, 255, 0));
+	-webkit-transition: width 2s;
+	-moz-transition: width 2s;
+	transition: width 2s;
+}
+
+.mytheme .chart:hover {
+	width: 500px;
+}
+
+.mytheme .random-color {
+	background: -webkit-linear-gradient(black, rgba(random(255), random(255), random(255), 0.5));
+	background: -o-linear-gradient(black, rgba(random(255), random(255), random(255), 0.5));
+	background: -moz-linear-gradient(black, rgba(random(255), random(255), random(255), 0.5));
+	background: linear, false, zip(black rgba(random(255), random(255), random(255), 0.5));
 }

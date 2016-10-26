@@ -52,7 +52,8 @@ public class MainSpacetimeView extends SpacetimeView {
     }
 
     private Component createMathSpacetimeView() {
-        return new MathSpacetimeView();
+        MathSpacetimeView mathView = new MathSpacetimeView();
+        return mathView;
     }
 
 

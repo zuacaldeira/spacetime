@@ -8,23 +8,49 @@ import com.vaadin.ui.Button;
  */
 public class MathSpacetimeView extends SpacetimeView {
 
-    public MathSpacetimeView() {
+    private ServicePortal numbers;
+    private ServicePortal operations;
+    private ServicePortal properties;
+    private ServicePortal strategies;
+    private ServicePortal applications;
+    private NumbersChart numbersChart;
+    private NumbersChart operationsChart;
+    private NumbersChart propertiesChart;
+    private NumbersChart strategiesChart;
+    private NumbersChart applicationsChart;
 
+    public MathSpacetimeView() {
     }
 
     protected SpaceTimeBody createMain() {
         SpaceTimeBody body = new SpaceTimeBody();
         // Numbers
-        ServicePortal numbers = createPortal("Numbers", getDummyDescription1());
-        numbers.addComponent(new NumbersChart(0,100));
-        body.addServicePortal(numbers);
+        numbers = createPortal("Numbers", getDummyDescription1());
+        numbersChart = new NumbersChart(0, 1000);
+        numbers.addComponent(numbersChart);
 
-        ServicePortal operations = createPortal("Operations", getDummyDescription2());
+        operations = createPortal("Operations", getDummyDescription2());
+        operationsChart = new NumbersChart(0, 1000);
+        operations.addComponent(operationsChart);
+
+        properties = createPortal("Properties", getDummyDescription2());
+        propertiesChart = new NumbersChart(0, 1000);
+        properties.addComponent(propertiesChart);
+
+        strategies = createPortal("Strategies", getDummyDescription2());
+        strategiesChart = new NumbersChart(0, 1000);
+        strategies.addComponent(strategiesChart);
+
+        applications = createPortal("Applications", getDummyDescription1());
+        applicationsChart = new NumbersChart(0, 1000);
+        applications.addComponent(applicationsChart);
+
+        body.addServicePortal(numbers);
         body.addServicePortal(operations);
-        ServicePortal strategies = createPortal("Strategies", getDummyDescription2());
+        body.addServicePortal(properties);
         body.addServicePortal(strategies);
-        ServicePortal applications = createPortal("Applications", getDummyDescription1());
         body.addServicePortal(applications);
+
         return body;
     }
 
