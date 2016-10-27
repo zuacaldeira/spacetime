@@ -15,4 +15,12 @@ public class AlternativeAdditionRelationship extends AlternativeOperationRelatio
     public AlternativeAdditionRelationship() {
         super();
     }
+
+    @Override
+    public String toString() {
+        return getOperands().getLeft().toString() +
+                " + " + getOperands().getRight().toString() +
+                " = " + getResult().toString();
+    }
+
 }

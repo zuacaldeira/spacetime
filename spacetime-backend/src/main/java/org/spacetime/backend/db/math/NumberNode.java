@@ -42,4 +42,8 @@ public class NumberNode extends NodeEntity {
     public int hashCode() {
         return value.hashCode();
     }
+
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

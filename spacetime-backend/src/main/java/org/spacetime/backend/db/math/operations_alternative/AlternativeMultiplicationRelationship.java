@@ -12,4 +12,11 @@ public class AlternativeMultiplicationRelationship extends AlternativeOperationR
         super(a, b, c);
     }
     public AlternativeMultiplicationRelationship() {}
+
+    @Override
+    public String toString() {
+        return getOperands().getLeft().toString() +
+                " * " + getOperands().getRight().toString() +
+                " = " + getResult().toString();
+    }
 }

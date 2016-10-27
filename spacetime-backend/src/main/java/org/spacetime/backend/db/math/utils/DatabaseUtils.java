@@ -21,6 +21,6 @@ public class DatabaseUtils {
 
 
     public static <T extends AlternativeOperationRelationship> List<T> loadProblems(Class<T> operationRelationshipClass) {
-        return new LinkedList<>(getNeo4JSession().loadAll(operationRelationshipClass));
+        return new LinkedList<>(getNeo4JSession().loadAll(operationRelationshipClass, 5));
     }
 }

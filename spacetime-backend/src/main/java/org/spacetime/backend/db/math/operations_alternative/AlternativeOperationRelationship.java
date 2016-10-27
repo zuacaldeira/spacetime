@@ -73,6 +73,14 @@ public class AlternativeOperationRelationship extends org.spacetime.backend.db.R
     }
 
 
+    public void setOperands(Operands operands) {
+        this.operands = operands;
+    }
+
+    public void setResult(NumberNode result) {
+        this.result = result;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -90,4 +98,5 @@ public class AlternativeOperationRelationship extends org.spacetime.backend.db.R
     public int hashCode() {
         return Objects.hash(operands, result);
     }
+
 }

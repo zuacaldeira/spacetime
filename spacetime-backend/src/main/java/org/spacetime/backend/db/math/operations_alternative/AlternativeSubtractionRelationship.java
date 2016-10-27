@@ -12,4 +12,12 @@ public class AlternativeSubtractionRelationship extends AlternativeOperationRela
         super(c, b, a);
     }
     public AlternativeSubtractionRelationship(){}
+
+    @Override
+    public String toString() {
+        return getOperands().getLeft().toString() +
+                " - " + getOperands().getRight().toString() +
+                " = " + getResult().toString();
+    }
+
 }

@@ -12,4 +12,11 @@ public class AlternativeDivisionRelationship extends AlternativeOperationRelatio
         super(c, b, a);
     }
     public AlternativeDivisionRelationship() {}
+
+    @Override
+    public String toString() {
+        return getOperands().getLeft().toString() +
+                " / " + getOperands().getRight().toString() +
+                " = " + getResult().toString();
+    }
 }

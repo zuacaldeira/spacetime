@@ -71,51 +71,26 @@ public class DatabaseBuilder  {
         if(entity instanceof AlternativeAdditionRelationship) {
             AlternativeAdditionRelationship addition = (AlternativeAdditionRelationship) entity;
             getNeo4JSession().save(addition);
-
-            getNeo4JSession().queryForObject(
-                    AdditionRelationship.class,
-                    Neo4JQueryFactory.getAlternativeAdditionRelationship(addition),
-                    new HashMap());
             return true;
         }
         else if(entity instanceof AlternativeSubtractionRelationship) {
             AlternativeSubtractionRelationship subtraction = (AlternativeSubtractionRelationship) entity;
             getNeo4JSession().save(subtraction);
-
-            getNeo4JSession().queryForObject(
-                    AdditionRelationship.class,
-                    Neo4JQueryFactory.getAlternativeSubtractionRelationship(subtraction),
-                    new HashMap());
             return true;
         }
         else if(entity instanceof AlternativeMultiplicationRelationship) {
             AlternativeMultiplicationRelationship multiplication = (AlternativeMultiplicationRelationship) entity;
             getNeo4JSession().save(multiplication);
-
-            getNeo4JSession().queryForObject(
-                    AdditionRelationship.class,
-                    Neo4JQueryFactory.getAlternativeMultiplicationRelationship(multiplication),
-                    new HashMap());
             return true;
         }
         else if(entity instanceof AlternativeDivisionRelationship) {
             AlternativeDivisionRelationship division = (AlternativeDivisionRelationship) entity;
             getNeo4JSession().save(division);
-
-            getNeo4JSession().queryForObject(
-                    AdditionRelationship.class,
-                    Neo4JQueryFactory.getAlternativeDivisionRelationship(division),
-                    new HashMap());
             return true;
         }
         else if(entity instanceof PredecessorRelationship) {
             PredecessorRelationship predecessor = (PredecessorRelationship) entity;
             getNeo4JSession().save(predecessor);
-
-            getNeo4JSession().queryForObject(
-                    PredecessorRelationship.class,
-                    Neo4JQueryFactory.getPredecessorRelationship(predecessor),
-                    new HashMap());
             return true;
         }
         return false;

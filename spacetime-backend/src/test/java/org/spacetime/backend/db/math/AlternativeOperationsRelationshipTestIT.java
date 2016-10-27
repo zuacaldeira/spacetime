@@ -44,7 +44,7 @@ public class AlternativeOperationsRelationshipTestIT extends AbstractEntityTestI
 
     @Test
     public void create100Operations() {
-        int size = 10;
+        int size = 20;
         DatabaseBuilder.build(size);
     }
 

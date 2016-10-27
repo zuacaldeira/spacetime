@@ -1,7 +1,10 @@
 package org.spacetime.backend.db.math.operations_alternative;
 
+import org.neo4j.ogm.annotation.Property;
+import org.neo4j.ogm.annotation.typeconversion.Convert;
 import org.spacetime.backend.db.NodeEntity;
 import org.spacetime.backend.db.math.NumberNode;
+import org.spacetime.backend.db.math.NumberNodeConverter;
 
 import java.util.Objects;
 
@@ -9,7 +12,12 @@ import java.util.Objects;
  * Created by zua on 27/10/16.
  */
 public class Operands extends NodeEntity {
+    @Property
+    @Convert(NumberNodeConverter.class)
     private NumberNode left;
+
+    @Property
+    @Convert(NumberNodeConverter.class)
     private NumberNode right;
 
     public Operands() {
@@ -39,6 +47,14 @@ public class Operands extends NodeEntity {
         return right;
     }
 
+    public void setLeft(NumberNode left) {
+        this.left = left;
+    }
+
+    public void setRight(NumberNode right) {
+        this.right = right;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -55,5 +71,9 @@ public class Operands extends NodeEntity {
     @Override
     public int hashCode() {
         return Objects.hash(left, right);
+    }
+
+    public String toString() {
+        return "(" + left.toString() + ", " + right.toString() + ")";
     }
 }
