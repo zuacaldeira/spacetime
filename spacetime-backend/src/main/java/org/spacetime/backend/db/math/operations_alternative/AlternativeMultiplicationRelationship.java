@@ -11,4 +11,5 @@ public class AlternativeMultiplicationRelationship extends AlternativeOperationR
     public AlternativeMultiplicationRelationship(NumberNode a, NumberNode b, NumberNode c) {
         super(a, b, c);
     }
+    public AlternativeMultiplicationRelationship() {}
 }

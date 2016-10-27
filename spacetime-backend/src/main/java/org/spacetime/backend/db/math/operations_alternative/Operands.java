@@ -9,8 +9,11 @@ import java.util.Objects;
  * Created by zua on 27/10/16.
  */
 public class Operands extends NodeEntity {
-    private final NumberNode left;
-    private final NumberNode right;
+    private NumberNode left;
+    private NumberNode right;
+
+    public Operands() {
+    }
 
     public Operands(NumberNode left, NumberNode right) {
         this.left = left;

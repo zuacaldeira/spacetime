@@ -16,7 +16,7 @@ import org.spacetime.backend.db.math.NumberNodeConverter;
  *
  * Created by zua on 26/10/16.
  */
-public class OperationRelationship extends org.spacetime.backend.db.RelationshipEntity {
+public abstract class OperationRelationship extends org.spacetime.backend.db.RelationshipEntity {
 
     /**
      * The left operand

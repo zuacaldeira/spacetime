@@ -8,7 +8,11 @@ import org.spacetime.backend.db.math.NumberNode;
  */
 @RelationshipEntity(type = "+")
 public class AlternativeAdditionRelationship extends AlternativeOperationRelationship {
+
     public AlternativeAdditionRelationship(NumberNode a, NumberNode b, NumberNode c) {
         super(a, b, c);
+    }
+    public AlternativeAdditionRelationship() {
+        super();
     }
 }

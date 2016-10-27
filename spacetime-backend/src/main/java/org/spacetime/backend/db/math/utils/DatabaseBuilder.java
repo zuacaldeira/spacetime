@@ -15,16 +15,12 @@ import org.spacetime.backend.db.math.operations_alternative.AlternativeSubtracti
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.spacetime.backend.db.math.utils.DatabaseUtils.getNeo4JSession;
+
 /**
  * Created by zua on 27/10/16.
  */
 public class DatabaseBuilder  {
-
-    private static Neo4JSessionFactory factory = Neo4JSessionFactory.getInstance();
-
-    private static Session getNeo4JSession() {
-        return factory.getNeo4JSession();
-    }
 
     public static void build(int size) {
 

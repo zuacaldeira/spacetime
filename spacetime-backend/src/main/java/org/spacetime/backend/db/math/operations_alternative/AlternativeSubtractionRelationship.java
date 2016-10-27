@@ -11,4 +11,5 @@ public class AlternativeSubtractionRelationship extends AlternativeOperationRela
     public AlternativeSubtractionRelationship(NumberNode c, NumberNode b, NumberNode a) {
         super(c, b, a);
     }
+    public AlternativeSubtractionRelationship(){}
 }

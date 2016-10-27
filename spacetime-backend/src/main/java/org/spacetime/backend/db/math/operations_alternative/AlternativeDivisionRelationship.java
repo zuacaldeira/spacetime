@@ -11,4 +11,5 @@ public class AlternativeDivisionRelationship extends AlternativeOperationRelatio
     public AlternativeDivisionRelationship(NumberNode c, NumberNode b, NumberNode a) {
         super(c, b, a);
     }
+    public AlternativeDivisionRelationship() {}
 }

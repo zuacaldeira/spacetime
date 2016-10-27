@@ -5,5 +5,4 @@ package org.spacetime.backend.db;
  */
 public abstract class RelationshipEntity extends Entity {
 
-
 }

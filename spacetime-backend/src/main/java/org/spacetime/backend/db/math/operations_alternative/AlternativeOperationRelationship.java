@@ -49,6 +49,9 @@ public class AlternativeOperationRelationship extends org.spacetime.backend.db.R
         this.result = result;
     }
 
+    public AlternativeOperationRelationship() {
+    }
+
 
     /**
      * Returns the operands.
