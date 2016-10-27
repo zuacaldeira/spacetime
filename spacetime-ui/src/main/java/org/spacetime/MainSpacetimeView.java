@@ -1,6 +1,8 @@
 package org.spacetime;
 
 
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
@@ -8,7 +10,8 @@ import com.vaadin.ui.Notification;
 /**
  * Created by zua on 19/10/16.
  */
-public class MainSpacetimeView extends SpacetimeView {
+public class MainSpacetimeView extends SpacetimeView implements View {
+    public static final String NAME = "";
     private SpacetimeButton sessionTypesButton;
     private SpacetimeButton mathsButton;
     private SpacetimeButton blogButton;
@@ -69,5 +72,10 @@ public class MainSpacetimeView extends SpacetimeView {
         else if(clickEvent.getButton() == blogButton) {
             getUI().setContent(createBlogSpacetimeView());
         }
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        System.out.println("Changing View inside Main");
     }
 }

@@ -1,6 +1,10 @@
-package org.spacetime;
+package org.spacetime.actors;
 
+import akka.actor.ActorRef;
+import akka.actor.Terminated;
 import akka.actor.UntypedActor;
+import org.spacetime.NumbersChart;
+import org.spacetime.Triple;
 
 import java.util.Random;
 
@@ -11,23 +15,25 @@ public class ChartActor extends UntypedActor {
 
     @Override
     public void onReceive(Object message) throws Throwable {
-        if(message instanceof Pair) {
-            //System.out.println("Received Message " + ((Pair) message).getFirst() + " for number " + ((Pair) message).getSecond());
-            Pair<NumbersChart, Integer> pair = (Pair<NumbersChart, Integer>) message;
-            drawBar(pair.getFirst(), pair.getSecond());
-        }
-
         if(message instanceof Triple) {
             //System.out.println("Received Message " + ((Pair) message).getFirst() + " for number " + ((Pair) message).getSecond());
             Triple<NumbersChart, Integer, Integer> triple = (Triple<NumbersChart, Integer, Integer>) message;
-            for(int i = triple.getSecond(); i <= triple.getThird(); i++) {
-                drawBar(triple.getFirst(), triple.getSecond());
-                Thread.sleep(1000);
-            }
+            NumbersChart chart = triple.getFirst();
+            int min = triple.getSecond();
+            int max = triple.getThird();
+            drawBars(chart, min, max);
         }
     }
 
-    private void drawBar(NumbersChart message, int i) {
-        message.onActorUpdate(i, new Random().nextFloat()*100);
+    private void drawBars(NumbersChart chart, int start, int end) {
+        float[] heights = new float[end-start+1];
+        for(int i = 0; i < heights.length; i++) {
+            heights[i] = new Random().nextFloat()*100;
+        }
+        chart.onActorUpdate(start, end, heights);
+    }
+
+    private ActorRef getParent() {
+        return getContext().parent();
     }
 }

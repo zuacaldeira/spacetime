@@ -3,9 +3,9 @@ package org.spacetime;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.server.VaadinService;
+import com.vaadin.ui.*;
+import org.spacetime.actors.Master;
 
 import java.util.Random;
 
@@ -16,15 +16,16 @@ public class NumbersChart extends HorizontalLayout {
 
     private final int min;
     private final int max;
-    private int count = 0;
+    private int count;
 
     public NumbersChart(int min, int max) {
         this.min = min;
         this.max = max;
+        this.count = max - min + 1;
         setSizeFull();
         setStyleName("chart");
         setMargin(true);
-        setCaption(getCaption(0));
+        setCaption(getCaption(count));
         initBars();
     }
 
@@ -32,8 +33,8 @@ public class NumbersChart extends HorizontalLayout {
         return String.valueOf(i) + "/" + (max-min+1);
     }
 
-    private void initBars() {
-        System.out.println("Starting Bars...");
+    protected void initBars() {
+        System.out.println("Starting Bars... on new Thread");
         ActorRef actor = ActorSystem.create().actorOf(Props.create(Master.class), "Chart" + new Random().nextFloat());
         actor.tell(this, ActorRef.noSender());
     }
@@ -46,19 +47,34 @@ public class NumbersChart extends HorizontalLayout {
         return min;
     }
 
-    public void onActorUpdate(int i, float height) {
-        //System.out.println("Actor tries to update " + i + " with height " + height);
-        if(getUI() != null) {
-            getUI().access(() -> {
-                VerticalLayout bar = new VerticalLayout();
-                bar.setStyleName("bar");
-                bar.setHeight(height, Unit.PIXELS);
-                bar.addStyleName("random-color");
-                addComponent(bar);
-                setComponentAlignment(bar, Alignment.BOTTOM_CENTER);
-                count++;
-                setCaption(getCaption(count));
-            });
-        }
+    public void onActorUpdate(int start, int end, float... heights) {
+        new Thread(() -> {
+            UI ui = UI.getCurrent();
+            if(ui != null) {
+                ui.access(() -> {
+                    System.out.println("Inside UI...");
+                    for(int i = 0; i < heights.length; i++) {
+                        addBar(start+i, heights[i]);
+                        if(i == heights.length/2) {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void addBar(int col, float height) {
+        VerticalLayout bar = new VerticalLayout();
+        bar.setHeight(height, Unit.PIXELS);
+        bar.setStyleName("bar");
+        addComponent(bar);
+        setComponentAlignment(bar, Alignment.BOTTOM_CENTER);
+        count--;
+        setCaption(getCaption(count));
     }
 }

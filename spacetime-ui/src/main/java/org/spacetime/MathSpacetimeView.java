@@ -1,12 +1,16 @@
 package org.spacetime;
 
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 
 /**
  * Created by zua on 21/10/16.
  */
-public class MathSpacetimeView extends SpacetimeView {
+public class MathSpacetimeView extends SpacetimeView implements View {
+
+    public static final String NAME = "MATH";
 
     private ServicePortal numbers;
     private ServicePortal operations;
@@ -26,23 +30,23 @@ public class MathSpacetimeView extends SpacetimeView {
         SpaceTimeBody body = new SpaceTimeBody();
         // Numbers
         numbers = createPortal("Numbers", getDummyDescription1());
-        numbersChart = new NumbersChart(0, 1000);
+        numbersChart = new CentesimalChart();
         numbers.addComponent(numbersChart);
 
         operations = createPortal("Operations", getDummyDescription2());
-        operationsChart = new NumbersChart(0, 1000);
+        operationsChart = new CentesimalChart();
         operations.addComponent(operationsChart);
 
         properties = createPortal("Properties", getDummyDescription2());
-        propertiesChart = new NumbersChart(0, 1000);
+        propertiesChart = new CentesimalChart();
         properties.addComponent(propertiesChart);
 
         strategies = createPortal("Strategies", getDummyDescription2());
-        strategiesChart = new NumbersChart(0, 1000);
+        strategiesChart = new CentesimalChart();
         strategies.addComponent(strategiesChart);
 
         applications = createPortal("Applications", getDummyDescription1());
-        applicationsChart = new NumbersChart(0, 1000);
+        applicationsChart = new CentesimalChart();
         applications.addComponent(applicationsChart);
 
         body.addServicePortal(numbers);
@@ -70,5 +74,10 @@ public class MathSpacetimeView extends SpacetimeView {
     @Override
     public void buttonClick(Button.ClickEvent event) {
 
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        System.out.println("Changing View inside Math");
     }
 }
