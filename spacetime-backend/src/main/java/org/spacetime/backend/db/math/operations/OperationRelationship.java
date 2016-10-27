@@ -1,10 +1,12 @@
-package org.spacetime.backend.db.math;
+package org.spacetime.backend.db.math.operations;
 
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 import org.neo4j.ogm.annotation.typeconversion.Convert;
+import org.spacetime.backend.db.math.NumberNode;
+import org.spacetime.backend.db.math.NumberNodeConverter;
 
 /**
  * This class represents addition as a relationship between number nodes.

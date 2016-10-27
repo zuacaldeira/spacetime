@@ -1,6 +1,7 @@
-package org.spacetime.backend;
+package org.spacetime.backend.services;
 
 
+import org.spacetime.backend.CrudService;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

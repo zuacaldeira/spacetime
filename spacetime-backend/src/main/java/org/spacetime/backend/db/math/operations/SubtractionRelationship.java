@@ -1,7 +1,6 @@
-package org.spacetime.backend.db.math;
+package org.spacetime.backend.db.math.operations;
 
-import org.spacetime.backend.db.Entity;
-import org.spacetime.backend.db.RelationshipEntity;
+import org.spacetime.backend.db.math.NumberNode;
 
 /**
  * Created by zua on 26/10/16.

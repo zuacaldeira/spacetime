@@ -1,4 +1,4 @@
-package org.spacetime.backend;
+package org.spacetime.backend.services;
 
 public class TestBean {
 

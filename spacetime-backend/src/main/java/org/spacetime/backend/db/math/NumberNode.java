@@ -40,6 +40,6 @@ public class NumberNode extends NodeEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return value.hashCode();
     }
 }

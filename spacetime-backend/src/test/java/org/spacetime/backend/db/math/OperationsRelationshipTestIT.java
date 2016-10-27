@@ -1,11 +1,14 @@
 package org.spacetime.backend.db.math;
 
 import org.spacetime.backend.db.*;
+import org.spacetime.backend.db.math.operations.AdditionRelationship;
+import org.spacetime.backend.db.math.operations.DivisionRelationship;
+import org.spacetime.backend.db.math.operations.MultiplicationRelationship;
+import org.spacetime.backend.db.math.operations.SubtractionRelationship;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import static org.testng.Assert.assertNotNull;
@@ -13,7 +16,7 @@ import static org.testng.Assert.assertNotNull;
 /**
  * Created by zua on 26/10/16.
  */
-public class AdditionRelationshipTestIT extends AbstractEntityTestIT {
+public class OperationsRelationshipTestIT extends AbstractEntityTestIT {
     @Override
     public void constructEntityTest() {
         AdditionRelationship relationship = new AdditionRelationship(
@@ -62,6 +65,15 @@ public class AdditionRelationshipTestIT extends AbstractEntityTestIT {
             getNeo4JSession().queryForObject(
                     AdditionRelationship.class,
                     Neo4JQueryFactory.getDivisionRelationship(division),
+                    new HashMap());
+        }
+        else if(entity instanceof PredecessorRelationship) {
+            PredecessorRelationship predecessor = (PredecessorRelationship) entity;
+            getNeo4JSession().save(predecessor);
+
+            getNeo4JSession().queryForObject(
+                    PredecessorRelationship.class,
+                    Neo4JQueryFactory.getPredecessorRelationship(predecessor),
                     new HashMap());
         }
     }
