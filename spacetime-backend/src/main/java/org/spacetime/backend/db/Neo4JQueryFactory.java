@@ -124,4 +124,8 @@ public class Neo4JQueryFactory {
                         " AND c.value = " + predecessor.getSuccessor().getValue() +
                         " RETURN r";
     }
+
+    public static String getAllAdditionsQuery() {
+        return "MATCH p=(a)-[r:`+`]->(c) RETURN r";
+    }
 }
