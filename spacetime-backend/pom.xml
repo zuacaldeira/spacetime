@@ -12,6 +12,20 @@
 	<name>spacetime-backend</name>
 	<packaging>jar</packaging>
 
+	<repositories>
+		<repository>
+			<id>neo4j-release-repository</id>
+			<name>Neo4j Maven 2 release repository</name>
+			<url>http://m2.neo4j.org/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- Testing -->
 		<dependency>
@@ -41,11 +55,6 @@
 			<version>2.0.5</version>
 		</dependency>
 
-		<dependency> <!-- If you're using the embedded server -->
-			<groupId>org.neo4j</groupId>
-			<artifactId>neo4j-ogm-bolt-driver</artifactId>
-			<version>2.0</version>
-		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
