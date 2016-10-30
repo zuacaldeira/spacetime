@@ -16,7 +16,6 @@ import javax.servlet.annotation.WebServlet;
  */
 @Theme("mytheme")
 @Push
-@PreserveOnRefresh
 public class SpaceTimeUI extends UI {
 
     @Override

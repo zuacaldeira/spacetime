@@ -7,13 +7,12 @@ import akka.routing.RoundRobinRoutingLogic;
 import akka.routing.Routee;
 import akka.routing.Router;
 import com.vaadin.ui.UIDetachedException;
-import org.spacetime.NumbersChart;
-import org.spacetime.Triple;
+import org.spacetime.math.NumbersChart;
+import org.spacetime.utils.Triple;
 import scala.concurrent.duration.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by zua on 22/10/16.
@@ -21,20 +20,20 @@ import java.util.Random;
 public class Master extends UntypedActor {
 
 
-    private static final int PROBLEM_SIZE = 1000;
+    private int REST = 0;
+    private int RATE = 100;
+    private int FREE;
     private Router router;
-    private int free;
 
     {
-        createRouter(2);
+        createRouter(1000);
     }
 
-
-
     private void createRouter(int size) {
-        free = size;
+        REST = size%RATE;
+        FREE = size/RATE + ((REST == 0) ? 0: 1);
         List<Routee> routees = new ArrayList<Routee>();
-        for (int i = 0; i <= free; i++) {
+        for (int i = 0; i < FREE; i++) {
             ActorRef r = getContext().actorOf(Props.create(ChartActor.class));
             getContext().watch(r);
             routees.add(new ActorRefRoutee(r));
@@ -78,23 +77,28 @@ public class Master extends UntypedActor {
 
     }
 
-    private void delegateChartDraw(NumbersChart message) {
-        int rate = (message.getMax() - message.getMin()) / free;
-        int rest = (message.getMax() - message.getMin()) % free;
-        for (int i = 0; i < free; i++) {
-            Integer min = i * rate;
-            Integer max = ((i + 1) * rate) - 1;
-            Triple<NumbersChart, Integer, Integer> work = (i == free - 1)
-                    ? new Triple<NumbersChart, Integer, Integer>(message, min, max + rest)
-                    : new Triple<NumbersChart, Integer, Integer>(message, min, max);
-            router.route(work, getSender());
-            //pause();
+    private void delegateChartDraw(NumbersChart chart) {
+        int REST = (chart.getMax() - chart.getMin() +1 ) % FREE;
+        int RATE = (chart.getMax() - chart.getMin() +1 ) / FREE;
+        createRouter(chart.getMax() - chart.getMin() +1 );
+        for (int i = 0; i < FREE; i++) {
+            Integer min = i * RATE;
+            Integer max = ((i + 1) * RATE) - 1;
+            delegatePack(chart, min, max);
+            pause(i);
+        }
+        if(REST != 0) {
+            delegatePack(chart, FREE*RATE, FREE*RATE+REST);
         }
     }
 
-    private void pause() {
+    private void delegatePack(NumbersChart chart, Integer min, Integer max) {
+        router.route(new Triple<NumbersChart, Integer, Integer>(chart, min, max), getSender());
+    }
+
+    private void pause(int i) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1000*(FREE-i));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

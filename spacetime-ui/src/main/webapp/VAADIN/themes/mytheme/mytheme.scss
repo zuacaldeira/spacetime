@@ -44,6 +44,25 @@ $period: 6s;
   }
 }
 
+@-moz-keyframes growing
+{
+  0% {
+    -moz-transform: scaleY(0);
+  }
+  100% {
+    -moz-transform: scaleY(1);
+  }
+}
+
+@-moz-keyframes mirror
+{
+  100% {
+    -moz-transform: rotateX(180);
+  }
+}
+
+
+
 @mixin mytheme {
   @include valo;
 
@@ -131,9 +150,10 @@ $period: 6s;
     background: -moz-linear-gradient(rgba(255,255,255,1),rgba(255,255,255,0)); /* For Firefox 3.6 to 15 */
     background: linear-gradient(rgba(255,255,255,1),rgba(255,255,255,0)); /* Standard syntax */
 
-    -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
-    -moz-transition: width 2s; /* For Safari 3.1 to 6.0 */
-    transition: width 2s;
+    -webkit-animation: mirror $period linear infinite;
+    -moz-animation: mirror $period linear infinite;
+    -o-animation: mirror $period linear infinite;
+    animation: mirror $period linear infinite;
   }
 
   .chart:hover {

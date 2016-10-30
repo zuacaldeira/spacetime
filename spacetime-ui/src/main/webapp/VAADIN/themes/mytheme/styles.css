@@ -1566,6 +1566,21 @@ div.v-layout.v-horizontal.v-widget {
 	}
 	}
 
+@-moz-keyframes growing {
+		0% {
+		-moz-transform: scaleY(0);
+	}
+		100% {
+		-moz-transform: scaleY(1);
+	}
+	}
+
+@-moz-keyframes mirror {
+		100% {
+		-moz-transform: rotateX(180);
+	}
+	}
+
 .mytheme.v-app, .mytheme.v-app-loading {
 	font: 300 16px/1.55 "Open Sans", sans-serif;
 	color: #464646;
@@ -13048,9 +13063,10 @@ div.v-layout.v-horizontal.v-widget {
 	background: -o-linear-gradient(white, rgba(255, 255, 255, 0));
 	background: -moz-linear-gradient(white, rgba(255, 255, 255, 0));
 	background: linear, false, zip(white rgba(255, 255, 255, 0));
-	-webkit-transition: width 2s;
-	-moz-transition: width 2s;
-	transition: width 2s;
+	-webkit-animation: mirror 6s linear infinite;
+	-moz-animation: mirror 6s linear infinite;
+	-o-animation: mirror 6s linear infinite;
+	animation: mirror 6s linear infinite;
 }
 
 .mytheme .chart:hover {
