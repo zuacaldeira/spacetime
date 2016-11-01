@@ -149,7 +149,7 @@ public class Neo4JQueryFactory {
         N = n;
         String PERIODIC_COMMIT = "USING PERIODIC COMMIT 1000\n";
         String LOAD_CSV = "LOAD CSV\n";
-        String HEADER = "WITH HEADERS FROM 'https://raw.githubusercontent.com/zuacaldeira/spacetime/master/spacetime-backend/f"+N+".csv' AS line\n";
+        String HEADER = "WITH HEADERS FROM 'https://raw.githubusercontent.com/zuacaldeira/spacetime/master/spacetime-backend/config/db/f"+N+".csv' AS line\n";
         String CREATE_NODES = "CREATE (n:NumberNode { value: toInt(line.value)})\n";
         String RETURN = "RETURN n\n";
         String query = PERIODIC_COMMIT + LOAD_CSV + HEADER + CREATE_NODES + RETURN;
