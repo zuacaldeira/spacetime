@@ -138,7 +138,7 @@ public class Neo4JQueryFactory {
         String PERIODIC_COMMIT = "USING PERIODIC COMMIT 1000\n";
         String LOAD_CSV = "LOAD CSV\n";
         String HEADER = "WITH HEADERS FROM 'https://raw.githubusercontent.com/zuacaldeira/spacetime/master/spacetime-backend/numbers.csv' AS line\n";
-        String CREATE_NODES = "CREATE (n:NumberNode { value: toInt(line.value)})\n";
+        String CREATE_NODES = "MERGE (n:NumberNode { value: toInt(line.value)})\n";
         String RETURN = "RETURN n\n";
         String query = PERIODIC_COMMIT + LOAD_CSV + HEADER + CREATE_NODES + RETURN;
         System.out.println("Query: " + query);
@@ -146,19 +146,19 @@ public class Neo4JQueryFactory {
     }
 
     public static String createSuccessors() {
-        String query = "MATCH (n:NumberNode), (m:NumberNode) WHERE m.value=n.value+1 CREATE (n)-[:PredecessorRelationship]->(m)";
+        String query = "MATCH (n:NumberNode), (m:NumberNode) WHERE m.value=n.value+1 MERGE (n)-[:PredecessorRelationship]->(m)";
         return query;
     }
 
     public static String createOperands() {
         String query =
             "MATCH (n:NumberNode), (m:NumberNode) " +
-            "CREATE (o:Operands), (n)-[:LEFT]->(o), (m)-[:RIGHT]->(o)";
+            "MERGE (o:Operands), (n)-[:LEFT]->(o), (m)-[:RIGHT]->(o)";
         return query;
     }
 
     public static String createMultiplications() {
-        String query = "MATCH (p:NumberNode), (n)-[:LEFT]->(o), (m)-[:RIGHT]->(o)  WHERE p.value=n.value*m.value  CREATE (o)-[r:Multiplication]->(p)";
+        String query = "MATCH (p:NumberNode), (n)-[:LEFT]->(o), (m)-[:RIGHT]->(o)  WHERE p.value=n.value*m.value  MERGE (o)-[r:Multiplication]->(p)";
         return query;
     }
 }
