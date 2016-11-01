@@ -134,7 +134,9 @@ public class Neo4JQueryFactory {
     }
 
     public static String loadFromNumbersQuery(String filename) {
-        return "LOAD CSV WITH HEADERS FROM 'file:///Users/zua/work/spacetime/spacetime-backend/numbers.csv' AS line\n" +
-                "CREATE (:NumberNode { value: toInt(line.Value)})";
+        String query = "LOAD CSV WITH HEADERS FROM 'https://github.com/zuacaldeira/spacetime/blob/master/spacetime-backend/numbers.csv' AS line\n" +
+                "CREATE (:NumberNode { value: toInt(line.Value)})" +
+                "RETURN line";
+        return query;
     }
 }
