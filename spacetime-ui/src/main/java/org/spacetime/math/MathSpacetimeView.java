@@ -4,10 +4,12 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import org.spacetime.components.SpaceTimeBody;
 import org.spacetime.components.SpacetimeButton;
 import org.spacetime.components.SpacetimeMenu;
 import org.spacetime.components.SpacetimeView;
+import org.spacetime.math.learn.AllOperationsView;
 import org.spacetime.services.portals.ServicePortal;
 
 /**
@@ -27,6 +29,9 @@ public class MathSpacetimeView extends SpacetimeView implements View {
     private NumbersChart propertiesChart;
     private NumbersChart strategiesChart;
     private NumbersChart applicationsChart;
+    private SpacetimeButton play;
+    private SpacetimeButton learn;
+    private SpacetimeButton practice;
 
     public MathSpacetimeView() {
     }
@@ -70,9 +75,18 @@ public class MathSpacetimeView extends SpacetimeView implements View {
 
     protected SpacetimeMenu createMenu() {
         SpacetimeMenu menu = new SpacetimeMenu();
-        menu.addMenuItem(new SpacetimeButton("Play", FontAwesome.GAMEPAD));
-        menu.addMenuItem(new SpacetimeButton("Learn", FontAwesome.BOOK));
-        menu.addMenuItem(new SpacetimeButton("Practice", FontAwesome.PENCIL));
+        play = new SpacetimeButton("Play", FontAwesome.GAMEPAD);
+        learn = new SpacetimeButton("Learn", FontAwesome.BOOK);
+        practice = new SpacetimeButton("Practice", FontAwesome.PENCIL);
+        practice.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                UI.getCurrent().setContent(new AllOperationsView());
+            }
+        });
+        menu.addMenuItem(play);
+        menu.addMenuItem(learn);
+        menu.addMenuItem(practice);
         return menu;
     }
 
