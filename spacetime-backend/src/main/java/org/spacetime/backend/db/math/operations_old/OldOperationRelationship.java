@@ -1,4 +1,4 @@
-package org.spacetime.backend.db.math.operations;
+package org.spacetime.backend.db.math.operations_old;
 
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.Property;
@@ -16,7 +16,7 @@ import org.spacetime.backend.db.math.NumberNodeConverter;
  *
  * Created by zua on 26/10/16.
  */
-public abstract class OperationRelationship extends org.spacetime.backend.db.RelationshipEntity {
+public abstract class OldOperationRelationship extends org.spacetime.backend.db.RelationshipEntity {
 
     /**
      * The left operand
@@ -50,7 +50,7 @@ public abstract class OperationRelationship extends org.spacetime.backend.db.Rel
      * @param right The right operand
      * @param result The result
      */
-    public OperationRelationship(NumberNode left, NumberNode right, NumberNode result) {
+    public OldOperationRelationship(NumberNode left, NumberNode right, NumberNode result) {
         this.left = left;
         this.right = right;
         this.result = result;

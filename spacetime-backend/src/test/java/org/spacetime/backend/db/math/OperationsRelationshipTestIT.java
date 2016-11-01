@@ -1,10 +1,7 @@
 package org.spacetime.backend.db.math;
 
 import org.spacetime.backend.db.*;
-import org.spacetime.backend.db.math.operations.AdditionRelationship;
-import org.spacetime.backend.db.math.operations.DivisionRelationship;
-import org.spacetime.backend.db.math.operations.MultiplicationRelationship;
-import org.spacetime.backend.db.math.operations.SubtractionRelationship;
+import org.spacetime.backend.db.math.operations_old.OldAdditionRelationshipOld;
 import org.spacetime.backend.main.DatabaseEvolutiveBuilder;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -20,7 +17,7 @@ import static org.testng.Assert.assertNotNull;
 public class OperationsRelationshipTestIT extends AbstractEntityTestIT {
     @Override
     public void constructEntityTest() {
-        AdditionRelationship relationship = new AdditionRelationship(
+        OldAdditionRelationshipOld relationship = new OldAdditionRelationshipOld(
                 new NumberNode(1),
                 new NumberNode(2),
                 new NumberNode(3));
@@ -77,7 +74,7 @@ public class OperationsRelationshipTestIT extends AbstractEntityTestIT {
     @DataProvider(name = "additions")
     public Object[][] additions() {
         return new Object[][]{
-                {new AdditionRelationship(
+                {new OldAdditionRelationshipOld(
                         new NumberNode(1),
                         new NumberNode(2),
                         new NumberNode(3))}

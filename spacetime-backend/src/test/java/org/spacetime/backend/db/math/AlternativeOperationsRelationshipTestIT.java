@@ -2,22 +2,11 @@ package org.spacetime.backend.db.math;
 
 import org.spacetime.backend.db.AbstractEntityTestIT;
 import org.spacetime.backend.db.Entity;
-import org.spacetime.backend.db.Neo4JQueryFactory;
 import org.spacetime.backend.db.NodeEntity;
-import org.spacetime.backend.db.math.operations.AdditionRelationship;
-import org.spacetime.backend.db.math.operations.DivisionRelationship;
-import org.spacetime.backend.db.math.operations.MultiplicationRelationship;
-import org.spacetime.backend.db.math.operations.SubtractionRelationship;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeAdditionRelationship;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeDivisionRelationship;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeMultiplicationRelationship;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeSubtractionRelationship;
 import org.spacetime.backend.db.math.utils.DatabaseBuilder;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;

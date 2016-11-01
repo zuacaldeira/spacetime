@@ -1,12 +1,10 @@
 package org.spacetime.backend.db;
 
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.spacetime.backend.db.math.PredecessorRelationship;
-import org.spacetime.backend.db.math.operations.AdditionRelationship;
-import org.spacetime.backend.db.math.operations.DivisionRelationship;
-import org.spacetime.backend.db.math.operations.MultiplicationRelationship;
-import org.spacetime.backend.db.math.operations.SubtractionRelationship;
+import org.spacetime.backend.db.math.operations_old.*;
+import org.spacetime.backend.db.math.operations_old.OldAdditionRelationshipOld;
+import org.spacetime.backend.db.math.operations_old.OldMultiplicationRelationshipOld;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeAdditionRelationship;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeDivisionRelationship;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeMultiplicationRelationship;
@@ -41,9 +39,9 @@ public class Neo4JQueryFactory {
 
 
 
-    public static String getAdditionRelationship(AdditionRelationship addition) {
+    public static String getAdditionRelationship(OldAdditionRelationshipOld addition) {
         return
-                "MATCH (a:NumberNode)-[r:AdditionRelationship]->(c:NumberNode) " +
+                "MATCH (a:NumberNode)-[r:OldAdditionRelationshipOld]->(c:NumberNode) " +
                         "WHERE a.value = " + addition.getLeft().getValue() +
                         " AND c.value = " + addition.getResult().getValue() +
                         " AND r.right.value = " + addition.getRight().getValue() +
@@ -51,27 +49,27 @@ public class Neo4JQueryFactory {
 
     }
 
-    public static String getSubtractionRelationship(SubtractionRelationship subtraction) {
+    public static String getSubtractionRelationship(OldSubtractionRelationship subtraction) {
         return
-                "MATCH (a:NumberNode)-[r:SubtractionRelationship]->(c:NumberNode) " +
+                "MATCH (a:NumberNode)-[r:OldSubtractionRelationship]->(c:NumberNode) " +
                         "WHERE a.value = " + subtraction.getLeft().getValue() +
                         " AND c.value = " + subtraction.getResult().getValue() +
                         " AND r.right.value = " + subtraction.getRight().getValue() +
                         " RETURN r";
     }
 
-    public static String getMultiplicationRelationship(MultiplicationRelationship multiplication) {
+    public static String getMultiplicationRelationship(OldMultiplicationRelationshipOld multiplication) {
         return
-                "MATCH (a:NumberNode)-[r:MultiplicationRelationship]->(c:NumberNode) " +
+                "MATCH (a:NumberNode)-[r:OldMultiplicationRelationshipOld]->(c:NumberNode) " +
                         "WHERE a.value = " + multiplication.getLeft().getValue() +
                         " AND c.value = " + multiplication.getResult().getValue() +
                         " AND r.right.value = " + multiplication.getRight().getValue() +
                         " RETURN r";
     }
 
-    public static String getDivisionRelationship(DivisionRelationship division) {
+    public static String getDivisionRelationship(OldDivisionRelationshipOld division) {
         return
-                "MATCH (a:NumberNode)-[r:DivisionRelationship]->(c:NumberNode) " +
+                "MATCH (a:NumberNode)-[r:OldDivisionRelationshipOld]->(c:NumberNode) " +
                         "WHERE a.value = " + division.getLeft().getValue() +
                         " AND c.value = " + division.getResult().getValue() +
                         " AND r.right.value = " + division.getRight().getValue() +

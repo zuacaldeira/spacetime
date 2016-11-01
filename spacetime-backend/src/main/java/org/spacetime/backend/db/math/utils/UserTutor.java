@@ -1,10 +1,6 @@
 package org.spacetime.backend.db.math.utils;
 
-import org.spacetime.backend.db.math.operations.OperationRelationship;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeAdditionRelationship;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeOperationRelationship;
-
-import java.util.List;
 
 /**
  * Created by zua on 27/10/16.

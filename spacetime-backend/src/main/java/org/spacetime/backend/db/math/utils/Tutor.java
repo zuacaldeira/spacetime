@@ -1,14 +1,10 @@
 package org.spacetime.backend.db.math.utils;
 
-import org.spacetime.backend.db.math.operations.OperationRelationship;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeOperationRelationship;
-import org.spacetime.backend.db.math.operations_alternative.Operands;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 /**
  * Created by zua on 27/10/16.
