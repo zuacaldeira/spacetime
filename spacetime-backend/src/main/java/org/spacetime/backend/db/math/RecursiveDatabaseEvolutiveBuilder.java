@@ -14,7 +14,10 @@ public class RecursiveDatabaseEvolutiveBuilder {
     private static HashMap<Integer, NumberNode> numbers = new HashMap<>();
 
     public static void evolve(int n) {
-        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.loadFromNumbersQuery("numbers.csv"), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.loadFromNumbersQuery(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createSuccessors(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createOperands(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createMultiplications(), new HashMap<>());
     }
 
     private static void evolve(int n, int i) {

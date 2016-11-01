@@ -1,6 +1,7 @@
 package org.spacetime.backend.db;
 
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.spacetime.backend.db.math.PredecessorRelationship;
 import org.spacetime.backend.db.math.operations.AdditionRelationship;
 import org.spacetime.backend.db.math.operations.DivisionRelationship;
@@ -133,10 +134,31 @@ public class Neo4JQueryFactory {
         return "CREATE (p:PrimeNode) RETURN p";
     }
 
-    public static String loadFromNumbersQuery(String filename) {
-        String query = "LOAD CSV WITH HEADERS FROM 'https://github.com/zuacaldeira/spacetime/blob/master/spacetime-backend/numbers.csv' AS line\n" +
-                "CREATE (:NumberNode { value: toInt(line.Value)})" +
-                "RETURN line";
+    public static String loadFromNumbersQuery() {
+        String PERIODIC_COMMIT = "USING PERIODIC COMMIT 1000\n";
+        String LOAD_CSV = "LOAD CSV\n";
+        String HEADER = "WITH HEADERS FROM 'https://raw.githubusercontent.com/zuacaldeira/spacetime/master/spacetime-backend/numbers.csv' AS line\n";
+        String CREATE_NODES = "CREATE (n:NumberNode { value: toInt(line.value)})\n";
+        String RETURN = "RETURN n\n";
+        String query = PERIODIC_COMMIT + LOAD_CSV + HEADER + CREATE_NODES + RETURN;
+        System.out.println("Query: " + query);
+        return query;
+    }
+
+    public static String createSuccessors() {
+        String query = "MATCH (n:NumberNode), (m:NumberNode) WHERE m.value=n.value+1 CREATE (n)-[:PredecessorRelationship]->(m)";
+        return query;
+    }
+
+    public static String createOperands() {
+        String query =
+            "MATCH (n:NumberNode), (m:NumberNode) " +
+            "CREATE (o:Operands), (n)-[:LEFT]->(o), (m)-[:RIGHT]->(o)";
+        return query;
+    }
+
+    public static String createMultiplications() {
+        String query = "MATCH (p:NumberNode), (n)-[:LEFT]->(o), (m)-[:RIGHT]->(o)  WHERE p.value=n.value*m.value  CREATE (o)-[r:Multiplication]->(p)";
         return query;
     }
 }
