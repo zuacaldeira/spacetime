@@ -13,20 +13,28 @@ import java.util.HashMap;
 public class RecursiveDatabaseEvolutiveBuilder {
     private static HashMap<Integer, NumberNode> numbers = new HashMap<>();
 
-    public static void evolve(int n) {
-        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.loadFromNumbersQuery(), new HashMap<>());
+    public static void evolveConnected(int n) {
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.deleteDatabase(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.addUniqueConstraint(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.loadFromNumbersQuery(100), new HashMap<>());
         DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createSuccessors(), new HashMap<>());
-        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createOperands(), new HashMap<>());
         DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createMultiplications(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createAdditions(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createSubtractions(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createDivisions(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createPrimes(), new HashMap<>());
     }
 
-    private static void evolve(int n, int i) {
-        if(i <= n) {
-            evolve(n-1);
-            for(int j = i; j < n; j++) {
-                addRelations(j, i);
-            }
-        }
+    public static void evolveDisconnected(int n) {
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.deleteDatabase(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.addUniqueConstraint(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.loadFromNumbersQuery(100), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createSuccessors(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createMultiplicationsDisconnected(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createAdditionsDisconnected(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createSubtractionsDisconnected(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createDivisionsDisconnected(), new HashMap<>());
+        DatabaseUtils.getNeo4JSession().query(Neo4JQueryFactory.createPrimes(), new HashMap<>());
     }
 
     private static void addRelations(int j, int i) {

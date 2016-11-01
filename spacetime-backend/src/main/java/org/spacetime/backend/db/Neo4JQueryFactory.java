@@ -22,6 +22,7 @@ public class Neo4JQueryFactory {
     private static final String WHERE = "WHERE";
     private static final String NUMBER_NODE = "(n:NumberNode)";
     private static final String WHERE_COND = "n.value = ";
+    private static int N = 0;
 
     public static String getNumberNodeWithValue(int i) {
         String query =
@@ -134,11 +135,22 @@ public class Neo4JQueryFactory {
         return "CREATE (p:PrimeNode) RETURN p";
     }
 
-    public static String loadFromNumbersQuery() {
+    public static String addUniqueConstraint() {
+        return "CREATE CONSTRAINT ON (nn:NumberNode) ASSERT nn.value IS UNIQUE\n";
+    }
+    public static String deleteDatabase() {
+        return
+            "MATCH (n)\n" +
+            "WITH n LIMIT 10000\n" +
+            "OPTIONAL MATCH (n)-[r]->()\n" +
+            "DELETE n,r";
+    }
+    public static String loadFromNumbersQuery(int n) {
+        N = n;
         String PERIODIC_COMMIT = "USING PERIODIC COMMIT 1000\n";
         String LOAD_CSV = "LOAD CSV\n";
-        String HEADER = "WITH HEADERS FROM 'https://raw.githubusercontent.com/zuacaldeira/spacetime/master/spacetime-backend/numbers.csv' AS line\n";
-        String CREATE_NODES = "MERGE (n:NumberNode { value: toInt(line.value)})\n";
+        String HEADER = "WITH HEADERS FROM 'https://raw.githubusercontent.com/zuacaldeira/spacetime/master/spacetime-backend/f"+N+".csv' AS line\n";
+        String CREATE_NODES = "CREATE (n:NumberNode { value: toInt(line.value)})\n";
         String RETURN = "RETURN n\n";
         String query = PERIODIC_COMMIT + LOAD_CSV + HEADER + CREATE_NODES + RETURN;
         System.out.println("Query: " + query);
@@ -146,19 +158,108 @@ public class Neo4JQueryFactory {
     }
 
     public static String createSuccessors() {
-        String query = "MATCH (n:NumberNode), (m:NumberNode) WHERE m.value=n.value+1 MERGE (n)-[:PredecessorRelationship]->(m)";
-        return query;
-    }
-
-    public static String createOperands() {
-        String query =
-            "MATCH (n:NumberNode), (m:NumberNode) " +
-            "MERGE (o:Operands), (n)-[:LEFT]->(o), (m)-[:RIGHT]->(o)";
+        String query = "MATCH (n:NumberNode), (m:NumberNode) WHERE m.value=n.value+1 CREATE (n)-[:SUC]->(m)";
+        System.out.println("Query: " + query);
         return query;
     }
 
     public static String createMultiplications() {
-        String query = "MATCH (p:NumberNode), (n)-[:LEFT]->(o), (m)-[:RIGHT]->(o)  WHERE p.value=n.value*m.value  MERGE (o)-[r:Multiplication]->(p)";
+        String query =
+            "MATCH (n:NumberNode), (m:NumberNode), (p:NumberNode)\n" +
+            "WHERE p.value = n.value*m.value <= " + N + "\n" +
+            "MERGE (o:Operands{left: n.value, right: m.value})\n" +
+            "CREATE (o)-[:Multiplication]->(p)";
+        System.out.println("Query: " + query);
         return query;
     }
+
+    public static String createAdditions() {
+        String query =
+                "MATCH (n:NumberNode), (m:NumberNode), (p:NumberNode)\n" +
+                        "WHERE p.value = n.value+m.value <= " + N + "\n" +
+                        "MERGE (o:Operands{left: n.value, right: m.value})\n" +
+                        "MERGE (o)-[:Addition]->(p)";
+        System.out.println("Query: " + query);
+        return query;
+    }
+
+    public static String createDivisions() {
+        String query =
+                "MATCH (n:NumberNode), (m:NumberNode), (p:NumberNode)\n" +
+                        "WHERE m.value <> 0 AND n.value%m.value = 0 AND  p.value = n.value/m.value \n" +
+                        "MERGE (o:Operands{left: n.value, right: m.value})\n" +
+                        "MERGE (o)-[:Division]->(p)";
+        System.out.println("Query: " + query);
+        return query;
+    }
+
+    public static String createPrimes() {
+        String query =
+                "MATCH (o:Operands)-[m:Multiplication]->(n:NumberNode)\n" +
+                "WITH DISTINCT(n) as n, count(m) as NumberOfMultiplications\n" +
+                "WHERE NumberOfMultiplications=2\n" +
+                "CREATE (p:PrimeNode)\n" +
+                "MERGE (n)-[:IS_PRIME]->(p)\n";
+                System.out.println("Query: " + query);
+        return query;
+    }
+
+    public static String createSubtractions() {
+        String query =
+                "MATCH (n:NumberNode), (m:NumberNode), (p:NumberNode)\n" +
+                        "WHERE p.value = n.value-m.value >= " + 0 + "\n" +
+                        "MERGE (o:Operands{left: n.value, right: m.value})\n" +
+                        "MERGE (o)-[:Subtraction]->(p)";
+        System.out.println("Query: " + query);
+        return query;
+    }
+
+
+
+
+
+
+
+    public static String createMultiplicationsDisconnected() {
+        String query =
+                "MATCH (n:NumberNode), (m:NumberNode), (p:NumberNode)\n" +
+                        "WHERE p.value = n.value*m.value <= " + N + "\n" +
+                        "CREATE (o:Operands{left: n.value, right: m.value})\n" +
+                        "MERGE (o)-[:Multiplication]->(p)";
+        System.out.println("Query: " + query);
+        return query;
+    }
+
+    public static String createAdditionsDisconnected() {
+        String query =
+                "MATCH (n:NumberNode), (m:NumberNode), (p:NumberNode)\n" +
+                        "WHERE p.value = n.value+m.value <= " + N + "\n" +
+                        "CREATE (o:Operands{left: n.value, right: m.value})\n" +
+                        "MERGE (o)-[:Addition]->(p)";
+        System.out.println("Query: " + query);
+        return query;
+    }
+
+    public static String createDivisionsDisconnected() {
+        String query =
+                "MATCH (n:NumberNode), (m:NumberNode), (p:NumberNode)\n" +
+                        "WHERE m.value <> 0 AND n.value%m.value = 0 AND  p.value = n.value/m.value \n" +
+                        "CREATE (o:Operands{left: n.value, right: m.value})\n" +
+                        "MERGE (o)-[:Division]->(p)";
+        System.out.println("Query: " + query);
+        return query;
+    }
+
+    public static String createSubtractionsDisconnected() {
+        String query =
+                "MATCH (n:NumberNode), (m:NumberNode), (p:NumberNode)\n" +
+                        "WHERE p.value = n.value-m.value >= " + 0 + "\n" +
+                        "CREATE (o:Operands{left: n.value, right: m.value})\n" +
+                        "MERGE (o)-[:Subtraction]->(p)";
+        System.out.println("Query: " + query);
+        return query;
+    }
+
+
+
 }

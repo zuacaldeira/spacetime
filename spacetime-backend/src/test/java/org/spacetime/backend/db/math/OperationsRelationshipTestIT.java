@@ -44,7 +44,7 @@ public class OperationsRelationshipTestIT extends AbstractEntityTestIT {
     @Test
     public void createDatabaseRec() {
         long before = System.currentTimeMillis();
-        RecursiveDatabaseEvolutiveBuilder.evolve(10);
+        RecursiveDatabaseEvolutiveBuilder.evolveDisconnected(10);
 
         long after = System.currentTimeMillis();
         System.out.println("Total Time: " + (after-before)/1000 + " seconds");
