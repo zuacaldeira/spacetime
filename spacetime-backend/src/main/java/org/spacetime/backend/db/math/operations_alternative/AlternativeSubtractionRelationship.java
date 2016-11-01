@@ -14,6 +14,11 @@ public class AlternativeSubtractionRelationship extends AlternativeOperationRela
     public AlternativeSubtractionRelationship(){}
 
     @Override
+    public String getOperationSign() {
+        return "-";
+    }
+
+    @Override
     public String toString() {
         return getOperands().getLeft().toString() +
                 " - " + getOperands().getRight().toString() +

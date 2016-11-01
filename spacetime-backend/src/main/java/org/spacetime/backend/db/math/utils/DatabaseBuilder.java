@@ -1,16 +1,13 @@
 package org.spacetime.backend.db.math.utils;
 
-import org.neo4j.ogm.session.Session;
 import org.spacetime.backend.db.Entity;
-import org.spacetime.backend.db.Neo4JQueryFactory;
-import org.spacetime.backend.db.Neo4JSessionFactory;
 import org.spacetime.backend.db.math.NumberNode;
 import org.spacetime.backend.db.math.PredecessorRelationship;
-import org.spacetime.backend.db.math.operations.AdditionRelationship;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeAdditionRelationship;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeDivisionRelationship;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeMultiplicationRelationship;
 import org.spacetime.backend.db.math.operations_alternative.AlternativeSubtractionRelationship;
+import org.spacetime.backend.main.DatabaseEvolutiveBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +18,15 @@ import static org.spacetime.backend.db.math.utils.DatabaseUtils.getNeo4JSession;
  * Created by zua on 27/10/16.
  */
 public class DatabaseBuilder  {
+
+    public static void main(String... args){
+        DatabaseEvolutiveBuilder.evolve(10000);
+        evolve(10000);
+    }
+
+    private static void evolve(int generation) {
+
+    }
 
     public static void build(int size) {
 

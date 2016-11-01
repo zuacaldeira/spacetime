@@ -14,6 +14,11 @@ public class AlternativeMultiplicationRelationship extends AlternativeOperationR
     public AlternativeMultiplicationRelationship() {}
 
     @Override
+    public String getOperationSign() {
+        return "x";
+    }
+
+    @Override
     public String toString() {
         return getOperands().getLeft().toString() +
                 " * " + getOperands().getRight().toString() +

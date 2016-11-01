@@ -2,6 +2,7 @@ package org.spacetime.backend.db.math.operations_alternative;
 
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.Property;
+import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 import org.neo4j.ogm.annotation.typeconversion.Convert;
 import org.spacetime.backend.db.math.NumberNode;
@@ -17,7 +18,8 @@ import java.util.Objects;
  *
  * Created by zua on 26/10/16.
  */
-public class AlternativeOperationRelationship extends org.spacetime.backend.db.RelationshipEntity {
+@RelationshipEntity(type = "°")
+public abstract class AlternativeOperationRelationship extends org.spacetime.backend.db.RelationshipEntity {
 
     /**
      * The operations's operands
@@ -98,5 +100,8 @@ public class AlternativeOperationRelationship extends org.spacetime.backend.db.R
     public int hashCode() {
         return Objects.hash(operands, result);
     }
+
+
+    public abstract String getOperationSign();
 
 }
