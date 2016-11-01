@@ -5,6 +5,7 @@ import org.spacetime.backend.db.math.operations.AdditionRelationship;
 import org.spacetime.backend.db.math.operations.DivisionRelationship;
 import org.spacetime.backend.db.math.operations.MultiplicationRelationship;
 import org.spacetime.backend.db.math.operations.SubtractionRelationship;
+import org.spacetime.backend.main.DatabaseEvolutiveBuilder;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -28,82 +29,25 @@ public class OperationsRelationshipTestIT extends AbstractEntityTestIT {
         assertNotNull(relationship.getResult());
     }
 
-    @Override
-    @Test(dataProvider = "additions")
     public void create(Entity entity) {
-        if(entity instanceof AdditionRelationship) {
-            AdditionRelationship addition = (AdditionRelationship) entity;
-            getNeo4JSession().save(addition);
-
-            getNeo4JSession().queryForObject(
-                    AdditionRelationship.class,
-                    Neo4JQueryFactory.getAdditionRelationship(addition),
-                    new HashMap());
-        }
-        else if(entity instanceof SubtractionRelationship) {
-            SubtractionRelationship subtraction = (SubtractionRelationship) entity;
-            getNeo4JSession().save(subtraction);
-
-            getNeo4JSession().queryForObject(
-                    AdditionRelationship.class,
-                    Neo4JQueryFactory.getSubtractionRelationship(subtraction),
-                    new HashMap());
-        }
-        else if(entity instanceof MultiplicationRelationship) {
-            MultiplicationRelationship multiplication = (MultiplicationRelationship) entity;
-            getNeo4JSession().save(multiplication);
-
-            getNeo4JSession().queryForObject(
-                    AdditionRelationship.class,
-                    Neo4JQueryFactory.getMultiplicationRelationship(multiplication),
-                    new HashMap());
-        }
-        else if(entity instanceof DivisionRelationship) {
-            DivisionRelationship division = (DivisionRelationship) entity;
-            getNeo4JSession().save(division);
-
-            getNeo4JSession().queryForObject(
-                    AdditionRelationship.class,
-                    Neo4JQueryFactory.getDivisionRelationship(division),
-                    new HashMap());
-        }
-        else if(entity instanceof PredecessorRelationship) {
-            PredecessorRelationship predecessor = (PredecessorRelationship) entity;
-            getNeo4JSession().save(predecessor);
-
-            getNeo4JSession().queryForObject(
-                    PredecessorRelationship.class,
-                    Neo4JQueryFactory.getPredecessorRelationship(predecessor),
-                    new HashMap());
-        }
     }
 
     @Test
-    public void create100Additions() {
-        int size = 100;
-        Map<Integer, NumberNode> numberMap = initNumberMap(size);
+    public void createDatabase() {
+        long before = System.currentTimeMillis();
+        DatabaseEvolutiveBuilder.evolve(10000);
 
-        for(int i = 0; i < size; i++) {
-            NumberNode a = numberMap.get(i);
-            for(int j = 0; j < size; j++) {
-                NumberNode b = numberMap.get(j);
-                if(i+j <= size) {
-                    NumberNode c = numberMap.get(i+j);
-                    create(new AdditionRelationship(a, b, c));
-                    create(new SubtractionRelationship(c, b, a));
-                }
-                if(i*j <= size) {
-                    NumberNode c = numberMap.get(i*j);
-                    create(new MultiplicationRelationship(a, b, c));
-                    if(j != 0) {
-                        create(new DivisionRelationship(c, b, a));
-                    }
-                }
-                else {
-                    break;
-                }
-            }
-        }
+        long after = System.currentTimeMillis();
+        System.out.println("Total Time: " + (after-before)/1000 + " seconds");
+    }
+
+    @Test
+    public void createDatabaseRec() {
+        long before = System.currentTimeMillis();
+        RecursiveDatabaseEvolutiveBuilder.evolve(10);
+
+        long after = System.currentTimeMillis();
+        System.out.println("Total Time: " + (after-before)/1000 + " seconds");
     }
 
     private Map<Integer, NumberNode> initNumberMap(int max) {

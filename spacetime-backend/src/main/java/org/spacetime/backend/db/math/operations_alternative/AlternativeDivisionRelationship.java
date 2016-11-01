@@ -14,6 +14,11 @@ public class AlternativeDivisionRelationship extends AlternativeOperationRelatio
     public AlternativeDivisionRelationship() {}
 
     @Override
+    public String getOperationSign() {
+        return "/";
+    }
+
+    @Override
     public String toString() {
         return getOperands().getLeft().toString() +
                 " / " + getOperands().getRight().toString() +

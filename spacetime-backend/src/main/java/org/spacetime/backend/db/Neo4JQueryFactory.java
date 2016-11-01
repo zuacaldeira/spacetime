@@ -128,4 +128,13 @@ public class Neo4JQueryFactory {
     public static String getAllAdditionsQuery() {
         return "MATCH p=(a)-[r:`+`]->(c) RETURN r";
     }
+
+    public static String createPrimeNode() {
+        return "CREATE (p:PrimeNode) RETURN p";
+    }
+
+    public static String loadFromNumbersQuery(String filename) {
+        return "LOAD CSV WITH HEADERS FROM 'file:///Users/zua/work/spacetime/spacetime-backend/numbers.csv' AS line\n" +
+                "CREATE (:NumberNode { value: toInt(line.Value)})";
+    }
 }

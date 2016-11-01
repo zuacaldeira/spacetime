@@ -1,6 +1,7 @@
 package org.spacetime.math;
 
 import akka.actor.*;
+import com.sun.org.apache.regexp.internal.RE;
 import com.vaadin.ui.*;
 import org.spacetime.actors.ChartChildActor;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -16,8 +17,6 @@ public class NumbersChart extends HorizontalLayout {
     private final int PART;
     private final int REST;
     private int count;
-
-    private ConcurrentLinkedQueue<BarsMessage> bars = new ConcurrentLinkedQueue<>();
 
     private ActorRef uiUpdater;
 
@@ -39,30 +38,22 @@ public class NumbersChart extends HorizontalLayout {
     }
 
     protected void initBars3() {
-        initDistributorThred();
-        initUpdaterThread();
-    }
-
-    private void initDistributorThred() {
-        new Thread(()-> {
-            ActorSystem system = ActorSystem.create("TS1");
+        new Thread(() -> {
+            ActorSystem system = ActorSystem.create("ActorSystem_SPACETIME");
             uiUpdater = system.actorOf(
                     Props.create(
                             UntypedActor.class,
                             () -> { return  getAnonymousActor(); })
             );
 
-            ActorRef worker1 = system.actorOf(Props.create(ChartChildActor.class), "worker1");
-            ActorRef worker2 = system.actorOf(Props.create(ChartChildActor.class), "worker2");
-            ActorRef worker3 = system.actorOf(Props.create(ChartChildActor.class), "worker3");
-            ActorRef worker4 = system.actorOf(Props.create(ChartChildActor.class), "worker4");
-            ActorRef worker5 = system.actorOf(Props.create(ChartChildActor.class), "worker5");
-            System.out.println("#PARTS = " + PART);
-            worker1.tell(new ChartMessage(this, 0, PART), uiUpdater);
-            worker2.tell(new ChartMessage(this, PART+1, PART), uiUpdater);
-            worker3.tell(new ChartMessage(this, 2 * PART+1, PART), uiUpdater);
-            worker4.tell(new ChartMessage(this, 3 * PART + 1, PART), uiUpdater);
-            worker5.tell(new ChartMessage(this, 4 * PART+1, REST), uiUpdater);
+            ActorRef master = system.actorOf(Props.create(ChartMasterActor.class), "MASTER");
+            master.tell(new ChartMessage(this, 0, PART), uiUpdater);
+            master.tell(new ChartMessage(this, PART+1, PART), uiUpdater);
+            master.tell(new ChartMessage(this, 2*PART+1, PART), uiUpdater);
+            master.tell(new ChartMessage(this, 3*PART+1, PART), uiUpdater);
+            if(REST != 0) {
+                master.tell(new ChartMessage(this, 4*PART+1, REST), uiUpdater);
+            }
         }).start();
     }
 
@@ -73,7 +64,7 @@ public class NumbersChart extends HorizontalLayout {
                 if (message instanceof BarsMessage) {
                     UI.getCurrent().access(() -> {
                         System.out.println("Anonymous actor RECIEVED MSG " + ((BarsMessage) message).getComponents().length);
-                        bars.add((BarsMessage) message);
+                        initUpdaterThread((BarsMessage) message);
                     });
                 } else {
                     unhandled(message);
@@ -82,25 +73,12 @@ public class NumbersChart extends HorizontalLayout {
         };
     }
 
-    private void initUpdaterThread() {
+    private void initUpdaterThread(BarsMessage bars) {
         new Thread(() -> {
-                int done = 0;
-                while(done < WORKERS) {
-                    if(!bars.isEmpty()) {
-                            Component[] comps = bars.peek().getComponents();
-                            System.out.println("Found Work Package with size " + comps.length);
-                            UI.getCurrent().access(()->{
-                                NumbersChart.this.addComponents(comps);
-                                setCaption(getCaption(count-=comps.length));
-                            });
-                        done++;
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+            UI.getCurrent().access(() -> {
+                addComponents(bars.getComponents());
+                setCaption(getCaption(count-=bars.getComponents().length));
+            });
         }).start();
     }
 

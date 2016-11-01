@@ -1,6 +1,7 @@
 package org.spacetime.backend.db.math.operations_alternative;
 
 import org.neo4j.ogm.annotation.Property;
+import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.Convert;
 import org.spacetime.backend.db.NodeEntity;
 import org.spacetime.backend.db.math.NumberNode;
@@ -12,6 +13,7 @@ import java.util.Objects;
  * Created by zua on 27/10/16.
  */
 public class Operands extends NodeEntity {
+
     @Property
     @Convert(NumberNodeConverter.class)
     private NumberNode left;

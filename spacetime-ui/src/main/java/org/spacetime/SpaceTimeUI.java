@@ -8,6 +8,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
+import org.spacetime.backend.db.math.operations_alternative.AlternativeOperationRelationship;
+import org.spacetime.backend.db.math.utils.UserTutor;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -18,10 +20,18 @@ import javax.servlet.annotation.WebServlet;
 @Push
 public class SpaceTimeUI extends UI {
 
+    private UserTutor<?> tutor;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         MainSpacetimeView layout = new MainSpacetimeView();
         setContent(layout);
+        String username = "guest";
+        tutor = new UserTutor<AlternativeOperationRelationship>(AlternativeOperationRelationship.class, username);
+    }
+
+    public UserTutor<?> getTutor() {
+        return tutor;
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
