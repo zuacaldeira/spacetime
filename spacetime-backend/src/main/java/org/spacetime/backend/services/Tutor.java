@@ -1,6 +1,7 @@
-package org.spacetime.backend.db.math.utils;
+package org.spacetime.backend.services;
 
-import org.spacetime.backend.db.math.operations_alternative.AlternativeOperationRelationship;
+import org.spacetime.backend.db.relationships.OperationRelationship;
+import org.spacetime.backend.utils.DatabaseUtils;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by zua on 27/10/16.
  */
-public abstract class Tutor<T extends AlternativeOperationRelationship> implements Iterable<T> {
+public abstract class Tutor<T extends OperationRelationship> implements Iterable<T> {
 
     private final Class<T> operationClass;
     private List<T> problems;
@@ -35,7 +36,7 @@ public abstract class Tutor<T extends AlternativeOperationRelationship> implemen
         problems = DatabaseUtils.loadProblems(operationClass);
     }
 
-    public boolean solve(AlternativeOperationRelationship relationship, int c) {
+    public boolean solve(OperationRelationship relationship, int c) {
         return relationship.getResult().getValue() == c;
     }
 

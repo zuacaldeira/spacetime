@@ -1,17 +1,17 @@
-package org.spacetime.backend.db.math.operations_alternative;
+package org.spacetime.backend.db.relationships;
 
-import org.spacetime.backend.db.math.NumberNode;
+import org.spacetime.backend.db.entities.NumberNode;
 
 /**
  * Created by zua on 26/10/16.
  */
 @org.neo4j.ogm.annotation.RelationshipEntity(type = "-")
-public class AlternativeSubtractionRelationship extends AlternativeOperationRelationship {
+public class Subtraction extends OperationRelationship {
 
-    public AlternativeSubtractionRelationship(NumberNode c, NumberNode b, NumberNode a) {
+    public Subtraction(NumberNode c, NumberNode b, NumberNode a) {
         super(c, b, a);
     }
-    public AlternativeSubtractionRelationship(){}
+    public Subtraction(){}
 
     @Override
     public String getOperationSign() {

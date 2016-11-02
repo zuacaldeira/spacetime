@@ -1,10 +1,10 @@
 package org.spacetime.backend.db.math;
 
-import org.spacetime.backend.db.AbstractEntityTestIT;
+import org.spacetime.backend.db.AbstractGraphTestIT;
 import org.spacetime.backend.db.Entity;
-import org.spacetime.backend.db.NodeEntity;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeAdditionRelationship;
-import org.spacetime.backend.db.math.utils.DatabaseBuilder;
+import org.spacetime.backend.db.entities.NumberNode;
+import org.spacetime.backend.db.relationships.Addition;
+import org.spacetime.backend.utils.OldDatabaseBuilder;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -14,10 +14,11 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by zua on 26/10/16.
  */
-public class AlternativeOperationsRelationshipTestIT extends AbstractEntityTestIT {
-    @Override
+public class OGMDatabaseTestIT extends AbstractGraphTestIT {
+
+    @Test
     public void constructEntityTest() {
-        AlternativeAdditionRelationship relationship = new AlternativeAdditionRelationship(
+        Addition relationship = new Addition(
                 new NumberNode(1),
                 new NumberNode(2),
                 new NumberNode(3));
@@ -25,38 +26,22 @@ public class AlternativeOperationsRelationshipTestIT extends AbstractEntityTestI
         assertNotNull(relationship.getResult());
     }
 
-    @Override
     @Test(dataProvider = "additions")
     public void create(Entity entity) {
-        assertTrue(DatabaseBuilder.create(entity));
+        assertTrue(OldDatabaseBuilder.create(entity));
     }
 
     @Test
     public void create100Operations() {
-        int size = 20;
-        DatabaseBuilder.build(size);
-    }
-
-    @Override
-    public NodeEntity read() {
-        return null;
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void delete() {
-
+        int size = 10;
+        OldDatabaseBuilder.build(size);
     }
 
 
     @DataProvider(name = "additions")
     public Object[][] additions() {
         return new Object[][]{
-                {new AlternativeAdditionRelationship(
+                {new Addition(
                         new NumberNode(1),
                         new NumberNode(2),
                         new NumberNode(3))}

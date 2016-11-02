@@ -3,9 +3,9 @@ package org.spacetime.math.learn;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.UI;
-import org.spacetime.backend.db.math.operations_alternative.*;
-import org.spacetime.backend.db.math.utils.DatabaseUtils;
-import org.spacetime.backend.db.math.utils.UserTutor;
+import org.spacetime.backend.db.relationships.Addition;
+import org.spacetime.backend.db.relationships.OperationRelationship;
+import org.spacetime.backend.services.UserTutor;
 
 /**
  * Created by zua on 30/10/16.
@@ -22,18 +22,18 @@ public class AllOperationsView extends GridLayout {
     }
 
     private void init() {
-        UserTutor<AlternativeAdditionRelationship> tutor = new UserTutor<>(AlternativeAdditionRelationship.class, "zuacaldeira@gmail.com");
+        UserTutor<Addition> tutor = new UserTutor<>(Addition.class, "zuacaldeira@gmail.com");
         tutor.iterator().forEachRemaining(
             p -> {
                 UI.getCurrent().access(() ->
                     {
-                        addComponent(getComponentFor((AlternativeOperationRelationship) p));
+                        addComponent(getComponentFor((OperationRelationship) p));
                     });
             }
         );
     }
 
-    private Component getComponentFor(AlternativeOperationRelationship p) {
+    private Component getComponentFor(OperationRelationship p) {
         return new MathOperationView(p);
     }
 

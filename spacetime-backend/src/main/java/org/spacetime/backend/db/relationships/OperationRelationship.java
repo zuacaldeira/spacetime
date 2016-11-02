@@ -1,12 +1,9 @@
-package org.spacetime.backend.db.math.operations_alternative;
+package org.spacetime.backend.db.relationships;
 
 import org.neo4j.ogm.annotation.EndNode;
-import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
-import org.neo4j.ogm.annotation.typeconversion.Convert;
-import org.spacetime.backend.db.math.NumberNode;
-import org.spacetime.backend.db.math.NumberNodeConverter;
+import org.spacetime.backend.db.entities.NumberNode;
 
 import java.util.Objects;
 
@@ -19,7 +16,7 @@ import java.util.Objects;
  * Created by zua on 26/10/16.
  */
 @RelationshipEntity(type = "°")
-public abstract class AlternativeOperationRelationship extends org.spacetime.backend.db.RelationshipEntity {
+public abstract class OperationRelationship extends org.spacetime.backend.db.relationships.RelationshipEntity {
 
     /**
      * The operations's operands
@@ -46,12 +43,12 @@ public abstract class AlternativeOperationRelationship extends org.spacetime.bac
      * @param right The right operand
      * @param result The result
      */
-    public AlternativeOperationRelationship(NumberNode left, NumberNode right, NumberNode result) {
+    public OperationRelationship(NumberNode left, NumberNode right, NumberNode result) {
         this.operands = new Operands(left, right);
         this.result = result;
     }
 
-    public AlternativeOperationRelationship() {
+    public OperationRelationship() {
     }
 
 
@@ -91,7 +88,7 @@ public abstract class AlternativeOperationRelationship extends org.spacetime.bac
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AlternativeOperationRelationship that = (AlternativeOperationRelationship) o;
+        OperationRelationship that = (OperationRelationship) o;
         return Objects.equals(operands, that.operands) &&
                 Objects.equals(result, that.result);
     }

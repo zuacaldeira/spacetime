@@ -1,11 +1,5 @@
-package org.spacetime.backend.db.math;
+package org.spacetime.backend.db.entities;
 
-import org.neo4j.ogm.annotation.Relationship;
-import org.spacetime.backend.db.NodeEntity;
-import org.spacetime.backend.db.math.operations_alternative.*;
-
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 /**

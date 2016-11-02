@@ -1,18 +1,18 @@
-package org.spacetime.backend.db.math.operations_alternative;
+package org.spacetime.backend.db.relationships;
 
 import org.neo4j.ogm.annotation.RelationshipEntity;
-import org.spacetime.backend.db.math.NumberNode;
+import org.spacetime.backend.db.entities.NumberNode;
 
 /**
  * Created by zua on 26/10/16.
  */
 @RelationshipEntity(type = "+")
-public class AlternativeAdditionRelationship extends AlternativeOperationRelationship {
+public class Addition extends OperationRelationship {
 
-    public AlternativeAdditionRelationship(NumberNode a, NumberNode b, NumberNode c) {
+    public Addition(NumberNode a, NumberNode b, NumberNode c) {
         super(a, b, c);
     }
-    public AlternativeAdditionRelationship() {
+    public Addition() {
         super();
     }
 

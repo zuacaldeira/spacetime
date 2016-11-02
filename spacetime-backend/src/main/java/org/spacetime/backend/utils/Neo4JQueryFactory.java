@@ -1,14 +1,11 @@
-package org.spacetime.backend.db;
+package org.spacetime.backend.utils;
 
 
-import org.spacetime.backend.db.math.PredecessorRelationship;
-import org.spacetime.backend.db.math.operations_old.*;
-import org.spacetime.backend.db.math.operations_old.OldAdditionRelationshipOld;
-import org.spacetime.backend.db.math.operations_old.OldMultiplicationRelationshipOld;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeAdditionRelationship;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeDivisionRelationship;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeMultiplicationRelationship;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeSubtractionRelationship;
+import org.spacetime.backend.db.relationships.Successor;
+import org.spacetime.backend.db.relationships.Addition;
+import org.spacetime.backend.db.relationships.Division;
+import org.spacetime.backend.db.relationships.Multiplication;
+import org.spacetime.backend.db.relationships.Subtraction;
 
 /**
  * Created by zua on 26/10/16.
@@ -39,48 +36,9 @@ public class Neo4JQueryFactory {
 
 
 
-    public static String getAdditionRelationship(OldAdditionRelationshipOld addition) {
+    public static String getAlternativeAdditionRelationship(Addition addition) {
         return
-                "MATCH (a:NumberNode)-[r:OldAdditionRelationshipOld]->(c:NumberNode) " +
-                        "WHERE a.value = " + addition.getLeft().getValue() +
-                        " AND c.value = " + addition.getResult().getValue() +
-                        " AND r.right.value = " + addition.getRight().getValue() +
-                        " RETURN r";
-
-    }
-
-    public static String getSubtractionRelationship(OldSubtractionRelationship subtraction) {
-        return
-                "MATCH (a:NumberNode)-[r:OldSubtractionRelationship]->(c:NumberNode) " +
-                        "WHERE a.value = " + subtraction.getLeft().getValue() +
-                        " AND c.value = " + subtraction.getResult().getValue() +
-                        " AND r.right.value = " + subtraction.getRight().getValue() +
-                        " RETURN r";
-    }
-
-    public static String getMultiplicationRelationship(OldMultiplicationRelationshipOld multiplication) {
-        return
-                "MATCH (a:NumberNode)-[r:OldMultiplicationRelationshipOld]->(c:NumberNode) " +
-                        "WHERE a.value = " + multiplication.getLeft().getValue() +
-                        " AND c.value = " + multiplication.getResult().getValue() +
-                        " AND r.right.value = " + multiplication.getRight().getValue() +
-                        " RETURN r";
-    }
-
-    public static String getDivisionRelationship(OldDivisionRelationshipOld division) {
-        return
-                "MATCH (a:NumberNode)-[r:OldDivisionRelationshipOld]->(c:NumberNode) " +
-                        "WHERE a.value = " + division.getLeft().getValue() +
-                        " AND c.value = " + division.getResult().getValue() +
-                        " AND r.right.value = " + division.getRight().getValue() +
-                        " RETURN r";
-    }
-
-
-
-    public static String getAlternativeAdditionRelationship(AlternativeAdditionRelationship addition) {
-        return
-            "MATCH (a:Operands)-[r:AlternativeAdditionRelationship]->(c:NumberNode) " +
+            "MATCH (a:Operands)-[r:Addition]->(c:NumberNode) " +
             "WHERE a.left.value = " + addition.getOperands().getLeft().getValue() +
                 " AND c.value = " + addition.getResult().getValue() +
                 " AND a.right.value = " + addition.getOperands().getRight().getValue() +
@@ -88,27 +46,27 @@ public class Neo4JQueryFactory {
 
     }
 
-    public static String getAlternativeSubtractionRelationship(AlternativeSubtractionRelationship subtraction) {
+    public static String getAlternativeSubtractionRelationship(Subtraction subtraction) {
         return
-                "MATCH (a:Operands)-[r:AlternativeSubtractionRelationship]->(c:NumberNode) " +
+                "MATCH (a:Operands)-[r:Subtraction]->(c:NumberNode) " +
                         "WHERE a.left.value = " + subtraction.getOperands().getLeft().getValue() +
                         " AND c.value = " + subtraction.getResult().getValue() +
                         " AND a.right.value = " + subtraction.getOperands().getRight().getValue() +
                         " RETURN r";
     }
 
-    public static String getAlternativeMultiplicationRelationship(AlternativeMultiplicationRelationship multiplication) {
+    public static String getAlternativeMultiplicationRelationship(Multiplication multiplication) {
         return
-                "MATCH (a:Operands)-[r:AlternativeMultiplicationRelationship]->(c:NumberNode) " +
+                "MATCH (a:Operands)-[r:Multiplication]->(c:NumberNode) " +
                         "WHERE a.left.value = " + multiplication.getOperands().getLeft().getValue() +
                         " AND c.value = " + multiplication.getResult().getValue() +
                         " AND a.right.value = " + multiplication.getOperands().getRight().getValue() +
                         " RETURN r";
     }
 
-    public static String getAlternativeDivisionRelationship(AlternativeDivisionRelationship division) {
+    public static String getAlternativeDivisionRelationship(Division division) {
         return
-                "MATCH (a:Operands)-[r:AlternativeDivisionRelationship]->(c:NumberNode) " +
+                "MATCH (a:Operands)-[r:Division]->(c:NumberNode) " +
                         "WHERE a.left.value = " + division.getOperands().getLeft().getValue() +
                         " AND c.value = " + division.getResult().getValue() +
                         " AND a.right.value = " + division.getOperands().getRight().getValue() +
@@ -117,9 +75,9 @@ public class Neo4JQueryFactory {
 
 
 
-    public static String getPredecessorRelationship(PredecessorRelationship predecessor) {
+    public static String getPredecessorRelationship(Successor predecessor) {
         return
-                "MATCH (a:NumberNode)-[r:PredecessorRelationship]->(c:NumberNode) " +
+                "MATCH (a:NumberNode)-[r:SUC_BY]->(c:NumberNode) " +
                         "WHERE a.value = " + predecessor.getPredecessor().getValue() +
                         " AND c.value = " + predecessor.getSuccessor().getValue() +
                         " RETURN r";
@@ -156,7 +114,7 @@ public class Neo4JQueryFactory {
     }
 
     public static String createSuccessors() {
-        String query = "MATCH (n:NumberNode), (m:NumberNode) WHERE m.value=n.value+1 CREATE (n)-[:SUC]->(m)";
+        String query = "MATCH (n:NumberNode), (m:NumberNode) WHERE m.value=n.value+1 CREATE (n)-[:SUC_BY]->(m)";
         System.out.println("Query: " + query);
         return query;
     }

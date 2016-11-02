@@ -1,6 +1,6 @@
-package org.spacetime.backend.db.math;
+package org.spacetime.backend.db.entities;
 
-import org.spacetime.backend.db.NodeEntity;
+import org.spacetime.backend.db.entities.NodeEntity;
 
 /**
  * Created by zua on 01/11/16.

@@ -1,4 +1,4 @@
-package org.spacetime.backend.db.math.utils;
+package org.spacetime.backend.services;
 
 /**
  * Created by zua on 27/10/16.

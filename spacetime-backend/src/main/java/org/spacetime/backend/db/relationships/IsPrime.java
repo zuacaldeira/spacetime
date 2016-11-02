@@ -1,8 +1,9 @@
-package org.spacetime.backend.db.math;
+package org.spacetime.backend.db.relationships;
 
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.StartNode;
-import org.spacetime.backend.db.RelationshipEntity;
+import org.spacetime.backend.db.entities.NumberNode;
+import org.spacetime.backend.db.entities.PrimeNode;
 
 import java.util.Objects;
 
@@ -13,10 +14,10 @@ import java.util.Objects;
 public class IsPrime extends RelationshipEntity {
 
     @StartNode
-    private  NumberNode start;
+    private NumberNode start;
 
     @EndNode
-    private  PrimeNode end;
+    private PrimeNode end;
 
     public IsPrime() {
     }

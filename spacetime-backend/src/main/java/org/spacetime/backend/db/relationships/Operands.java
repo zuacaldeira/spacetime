@@ -1,11 +1,10 @@
-package org.spacetime.backend.db.math.operations_alternative;
+package org.spacetime.backend.db.relationships;
 
 import org.neo4j.ogm.annotation.Property;
-import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.Convert;
-import org.spacetime.backend.db.NodeEntity;
-import org.spacetime.backend.db.math.NumberNode;
-import org.spacetime.backend.db.math.NumberNodeConverter;
+import org.spacetime.backend.db.entities.NodeEntity;
+import org.spacetime.backend.db.entities.NumberNode;
+import org.spacetime.backend.db.entities.NumberNodeConverter;
 
 import java.util.Objects;
 

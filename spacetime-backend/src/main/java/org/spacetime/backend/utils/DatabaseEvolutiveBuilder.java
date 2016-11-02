@@ -1,13 +1,11 @@
-package org.spacetime.backend.main;
+package org.spacetime.backend.utils;
 
-import org.spacetime.backend.db.Neo4JQueryFactory;
-import org.spacetime.backend.db.RelationshipEntity;
-import org.spacetime.backend.db.math.IsPrime;
-import org.spacetime.backend.db.math.NumberNode;
-import org.spacetime.backend.db.math.PredecessorRelationship;
-import org.spacetime.backend.db.math.PrimeNode;
-import org.spacetime.backend.db.math.operations_alternative.*;
-import org.spacetime.backend.db.math.utils.DatabaseUtils;
+import org.spacetime.backend.db.relationships.RelationshipEntity;
+import org.spacetime.backend.db.relationships.IsPrime;
+import org.spacetime.backend.db.entities.NumberNode;
+import org.spacetime.backend.db.relationships.Successor;
+import org.spacetime.backend.db.entities.PrimeNode;
+import org.spacetime.backend.db.relationships.*;
 
 import java.util.*;
 
@@ -126,7 +124,7 @@ public class DatabaseEvolutiveBuilder {
         Map<NumberNode, Integer> result = new HashMap<>();
         multiplications.values().forEach(
                 (m) -> {
-                    AlternativeMultiplicationRelationship mm = (AlternativeMultiplicationRelationship) m;
+                    Multiplication mm = (Multiplication) m;
                     if(!result.containsKey(mm.getResult())) {
                         result.put(mm.getResult(), 1);
                     }
@@ -160,72 +158,72 @@ public class DatabaseEvolutiveBuilder {
 
     private static void addSuccessor(int successor, int predecessor) {
         if(predecessor >= 0) {
-            DatabaseUtils.getNeo4JSession().save(memory(new PredecessorRelationship(memory(predecessor), memory(successor))));
+            DatabaseUtils.getNeo4JSession().save(memory(new Successor(memory(predecessor), memory(successor))));
         }
     }
 
-    private static PredecessorRelationship memory(PredecessorRelationship predecessor) {
+    private static Successor memory(Successor predecessor) {
         if(!predecessors.containsKey(predecessor.getPredecessor())) {
             predecessors.put(predecessor.getPredecessor(), predecessor);
         }
-        return (PredecessorRelationship) predecessors.get(predecessor.getPredecessor());
+        return (Successor) predecessors.get(predecessor.getPredecessor());
     }
 
 
-    private static AlternativeOperationRelationship memory(AlternativeAdditionRelationship operation) {
+    private static OperationRelationship memory(Addition operation) {
         Operands key = operation.getOperands();
         if(!additions.containsKey(key)) {
             additions.put(key, operation);
         }
-        return (AlternativeOperationRelationship) additions.get(key);
+        return (OperationRelationship) additions.get(key);
     }
 
-    private static AlternativeOperationRelationship memory(AlternativeSubtractionRelationship operation) {
+    private static OperationRelationship memory(Subtraction operation) {
         Operands key = operation.getOperands();
         if(!subtractions.containsKey(key)) {
             subtractions.put(key, operation);
         }
-        return (AlternativeOperationRelationship) subtractions.get(key);
+        return (OperationRelationship) subtractions.get(key);
     }
 
-    private static AlternativeOperationRelationship memory(AlternativeMultiplicationRelationship operation) {
+    private static OperationRelationship memory(Multiplication operation) {
         Operands key = operation.getOperands();
         if(!multiplications.containsKey(key)) {
             multiplications.put(key, operation);
         }
-        return (AlternativeOperationRelationship) multiplications.get(key);
+        return (OperationRelationship) multiplications.get(key);
     }
 
-    private static AlternativeOperationRelationship memory(AlternativeDivisionRelationship operation) {
+    private static OperationRelationship memory(Division operation) {
         Operands key = operation.getOperands();
         if(!divisions.containsKey(key)) {
             divisions.put(key, operation);
         }
-        return (AlternativeOperationRelationship) divisions.get(key);
+        return (OperationRelationship) divisions.get(key);
     }
 
 
     private static void addAddition(int left, int right) {
         if(left + right <= GENERATION) {
-            DatabaseUtils.getNeo4JSession().save(memory(new AlternativeAdditionRelationship(memory(left), memory(right), memory(left+right))));
+            DatabaseUtils.getNeo4JSession().save(memory(new Addition(memory(left), memory(right), memory(left+right))));
         }
     }
 
     private static void addSubtraction(int left, int right) {
         if(left - right >= 0) {
-            DatabaseUtils.getNeo4JSession().save(memory(new AlternativeSubtractionRelationship(memory(left), memory(right), memory(left-right))));
+            DatabaseUtils.getNeo4JSession().save(memory(new Subtraction(memory(left), memory(right), memory(left-right))));
         }
     }
 
     private static void addMultiplication(int left, int right) {
         if(left * right <= GENERATION) {
-            DatabaseUtils.getNeo4JSession().save(memory(new AlternativeMultiplicationRelationship(memory(left), memory(right), memory(left*right))));
+            DatabaseUtils.getNeo4JSession().save(memory(new Multiplication(memory(left), memory(right), memory(left*right))));
         }
     }
 
     private static void addDivision(int divisor, int divider) {
         if(divider != 0 && divisor%divider == 0) {
-            DatabaseUtils.getNeo4JSession().save(memory(new AlternativeDivisionRelationship(memory(divisor), memory(divider), memory(divisor/divider))));
+            DatabaseUtils.getNeo4JSession().save(memory(new Division(memory(divisor), memory(divider), memory(divisor/divider))));
         }
     }
 

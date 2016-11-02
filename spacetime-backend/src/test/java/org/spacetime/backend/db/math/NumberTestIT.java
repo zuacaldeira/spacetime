@@ -1,9 +1,9 @@
 package org.spacetime.backend.db.math;
 
-import org.spacetime.backend.db.AbstractEntityTestIT;
+import org.spacetime.backend.db.AbstractGraphTestIT;
 import org.spacetime.backend.db.Entity;
-import org.spacetime.backend.db.Neo4JQueryFactory;
-import org.spacetime.backend.db.NodeEntity;
+import org.spacetime.backend.db.entities.NumberNode;
+import org.spacetime.backend.utils.Neo4JQueryFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -14,7 +14,7 @@ import static org.testng.Assert.*;
 /**
  * Created by zua on 26/10/16.
  */
-public class NumberTestIT extends AbstractEntityTestIT {
+public class NumberTestIT extends AbstractGraphTestIT {
 
     @Test
     public void constructEntityTest() {
@@ -26,7 +26,6 @@ public class NumberTestIT extends AbstractEntityTestIT {
     }
 
 
-    @Override
     @Test(dataProvider = "numbers")
     public void create(Entity node) {
         if(node instanceof  NumberNode) {
@@ -49,24 +48,6 @@ public class NumberTestIT extends AbstractEntityTestIT {
             create(new NumberNode(i));
         }
     }
-
-
-
-    @Override
-    public NodeEntity read() {
-        return null;
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
 
 
 

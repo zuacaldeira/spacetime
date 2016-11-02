@@ -1,15 +1,13 @@
 package org.spacetime;
 
-import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
-import org.spacetime.backend.db.math.operations_alternative.AlternativeOperationRelationship;
-import org.spacetime.backend.db.math.utils.UserTutor;
+import org.spacetime.backend.db.relationships.OperationRelationship;
+import org.spacetime.backend.services.UserTutor;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -27,7 +25,7 @@ public class SpaceTimeUI extends UI {
         MainSpacetimeView layout = new MainSpacetimeView();
         setContent(layout);
         String username = "guest";
-        tutor = new UserTutor<AlternativeOperationRelationship>(AlternativeOperationRelationship.class, username);
+        tutor = new UserTutor<OperationRelationship>(OperationRelationship.class, username);
     }
 
     public UserTutor<?> getTutor() {

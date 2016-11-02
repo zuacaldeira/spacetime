@@ -1,4 +1,4 @@
-package org.spacetime.backend.db.math;
+package org.spacetime.backend.db.entities;
 
 import org.neo4j.ogm.typeconversion.AttributeConverter;
 

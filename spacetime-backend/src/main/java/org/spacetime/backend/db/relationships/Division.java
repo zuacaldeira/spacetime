@@ -1,17 +1,17 @@
-package org.spacetime.backend.db.math.operations_alternative;
+package org.spacetime.backend.db.relationships;
 
 import org.neo4j.ogm.annotation.RelationshipEntity;
-import org.spacetime.backend.db.math.NumberNode;
+import org.spacetime.backend.db.entities.NumberNode;
 
 /**
  * Created by zua on 26/10/16.
  */
 @RelationshipEntity(type = "/")
-public class AlternativeDivisionRelationship extends AlternativeOperationRelationship {
-    public AlternativeDivisionRelationship(NumberNode c, NumberNode b, NumberNode a) {
+public class Division extends OperationRelationship {
+    public Division(NumberNode c, NumberNode b, NumberNode a) {
         super(c, b, a);
     }
-    public AlternativeDivisionRelationship() {}
+    public Division() {}
 
     @Override
     public String getOperationSign() {

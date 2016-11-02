@@ -1,8 +1,9 @@
-package org.spacetime.backend.db;
+package org.spacetime.backend.utils;
 
 import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
+import org.spacetime.backend.db.Entity;
 
 /**
  * Created by zua on 26/10/16.
